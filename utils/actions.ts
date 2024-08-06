@@ -11,3 +11,10 @@ export const testingAction = async (prevState: any,
 
   return { message: `Profile created for: ${firstName}`,  }
 }
+
+export const createProfileAction = async (prevState: any, formData: FormData) => {
+
+  const firstName = formData.get('firstName') as string
+  if (firstName !== 'shakeAndBake') return { message: 'there was an error...' }
+  return { message: 'Profile Created' }
+}

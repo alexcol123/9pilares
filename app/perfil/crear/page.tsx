@@ -1,37 +1,30 @@
-'use client'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { useFormStatus } from 'react-dom'
-import { testingAction } from '@/utils/actions'
-import { SubmitButton } from '@/components/myComponents/form/Buttons'
-import FormTest from '@/components/myComponents/form/FormTest'
+import { SubmitButton } from "@/components/myComponents/form/Buttons"
+import FormContainer from "@/components/myComponents/form/FormContainer"
 
-
-const CrearPerfilPage = () => {
+import FormInput from "@/components/myComponents/form/FormInput"
+import { createProfileAction } from "@/utils/actions"
 
 
 
-  const { pending } = useFormStatus()
 
-  return (
-    <section>
+
+async function CreateProfile() {
+
+
+    return (
+      <section className="w-full">
       <h1 className='text-2xl font-semibold mb-8 capitalize'>new user</h1>
-      <div className='border p-8 rounded-md max-w-lg'>
-
-        {/* <form action={createPerfilAction }>
-          <div className="mb-2">
-            <Label htmlFor='firstName'>First Name</Label>
-            <Input id='firstName' name='firstName' type='text' />
+      <div className='border p-8 rounded-md '>
+        <FormContainer action={createProfileAction}>
+        <div className='grid gap-4 md:grid-cols-2 mt-4 '>
+            <FormInput type='text' name='firstName' label='First Name' />
+            <FormInput type='text' name='lastName' label='Last Name' />
+            <FormInput type='text' name='username' label='Username' />
           </div>
-
-   <SubmitButton text='Create' />
-        </form> */}
-
-        <FormTest action={testingAction} />
-
+          <SubmitButton text='Create Profile' className='mt-8' />
+        </FormContainer>
       </div>
     </section>
-  )
-}
-export default CrearPerfilPage
+    )
+  }
+  export default CreateProfile
