@@ -6,6 +6,7 @@ import db from './db'
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { uploadImage } from './supabase'
 
 // local functions 
 const getAuthUser = async () => {
@@ -15,7 +16,7 @@ const getAuthUser = async () => {
   }
 
   if (!user.privateMetadata.tienePerfil) {
-    redirect('/profile/crear')
+    redirect('/perfil/crear')
   }
 
   return user
@@ -56,14 +57,14 @@ export const createProfileAction = async (
   try {
 
     const user = await currentUser()
-    if (!user) throw new Error('Please login to create a profile')
+    if (!user) throw new Error('Please login to create a perfil')
 
     const rawData = Object.fromEntries(formData)
-    
+
     // const validatedFields = profileSchema.parse(rawData)
     const validatedFields = validateWithZodSchema(profileSchema, rawData)
 
-    await db.profile.create({
+    await db.perfil.create({
       data: {
         clerkId: user.id,
         email: user.emailAddresses[0].emailAddress,
@@ -92,12 +93,12 @@ export const fetchProfileImage = async () => {
   const user = await currentUser()
   if (!user) return null
 
-  const profile = await db.profile.findFirst({
+  const perfil = await db.perfil.findFirst({
     where: { clerkId: user.id },
     select: { imagenPerfil: true },
   })
 
-  return profile?.imagenPerfil
+  return perfil?.imagenPerfil
 
 }
 
@@ -105,13 +106,13 @@ export const fetchProfileImage = async () => {
 export const fetchProfile = async () => {
   const user = await getAuthUser()
 
-  const profile = await db.profile.findUnique({
+  const perfil = await db.perfil.findUnique({
     where: {
       clerkId: user.id,
     },
   })
-  if (!profile) return redirect('/profile/create')
-  return profile
+  if (!perfil) return redirect('/perfil/create')
+  return perfil
 }
 
 
@@ -128,12 +129,12 @@ export const updateProfileAction = async (
 
     const validatedFileds = profileSchema.parse(rawData)
 
-    await db.profile.update({
+    await db.perfil.update({
       where: { clerkId: user.id },
       data: validatedFileds,
     })
 
-    revalidatePath('/profile')
+    revalidatePath('/perfil')
     return { message: 'Profile updated successfully' }
 
   } catch (error) {
@@ -152,7 +153,18 @@ export const updateProfileImageAction = async (
     const image = formData.get('image') as File
     const validatedFields = validateWithZodSchema(imageSchema, { image })
 
-    return { message: 'Profile image updated successfully' }
+    const fullPath = await uploadImage(validatedFields.image)
+
+    await db.perfil.update({
+      where: {
+        clerkId: user.id,
+      },
+      data: {
+        imagenPerfil: fullPath,
+      },
+    })
+    revalidatePath('/perfil')
+    return { message: 'Imagend de perfil actualizada' }
   } catch (error) {
     return renderError(error)
   }

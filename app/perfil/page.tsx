@@ -5,19 +5,19 @@ import ImageInputContainer from "@/components/myComponents/form/ImageInputContai
 import { fetchProfile, fetchProfileImage, updateProfileAction, updateProfileImageAction } from "@/utils/actions"
 
 const PerfilPage = async () => {
-  const profile = await fetchProfile()
+  const perfil = await fetchProfile()
 
   return (
     <section>
-      <h1 className='text-2xl font-semibold mb-8 capitalize'>user profile</h1>
+      <h1 className='text-2xl font-semibold mb-8 capitalize'>user perfil</h1>
       <div className='border p-8 rounded-md'>
         {/* image input container */}
 
 
 
         <ImageInputContainer
-          image={profile.imagenPerfil}
-          name={profile.nombre}
+          image={perfil.imagenPerfil}
+          name={perfil.nombre}
           action={updateProfileImageAction}
           text='Actualizar imagen de perfil'
         />
@@ -26,9 +26,9 @@ const PerfilPage = async () => {
           <div className='grid gap-4 md:grid-cols-2 mt-4 '>
 
 
-            <FormInput type='text' name='nombre' label='nombre' defaultValue={profile.nombre} />
-            <FormInput type='text' name='apellido' label='apellido' defaultValue={profile.apellido} />
-            <FormInput type='text' name='usuario' label='usuario' defaultValue={profile.usuario} />
+            <FormInput type='text' name='nombre' label='nombre' defaultValue={perfil.nombre} />
+            <FormInput type='text' name='apellido' label='apellido' defaultValue={perfil.apellido} />
+            <FormInput type='text' name='usuario' label='usuario' defaultValue={perfil.usuario} />
 
           </div>
           <SubmitButton text='Update Profile' className='mt-8' />
