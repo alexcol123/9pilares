@@ -53,12 +53,25 @@ export const createProfileAction = async (
       },
     })
 
-    // console.log(validatedFields)
-    return { message: 'Profile Created' }
   } catch (error) {
     console.log(error)
     return { message: 'there was an error...' }
   }
 
   redirect('/')
+}
+
+
+export const fetchProfileImage = async () => {
+
+  const user = await currentUser()
+  if (!user) return null
+
+  const profile = await db.profile.findFirst({
+    where: { clerkId: user.id },
+    select: { profileImage: true },
+  })
+
+  return profile?.profileImage
+
 }

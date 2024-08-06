@@ -4,12 +4,14 @@ import FormContainer from "@/components/myComponents/form/FormContainer"
 import FormInput from "@/components/myComponents/form/FormInput"
 import { createProfileAction } from "@/utils/actions"
 
-
-
+import { currentUser } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 
 
 async function CreateProfile() {
 
+  const user = await currentUser();
+  if (user?.privateMetadata?.tienePerfil) redirect('/');
 
   return (
     <section className="w-full">
