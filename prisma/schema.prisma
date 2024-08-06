@@ -14,11 +14,10 @@
 // For Stripe  webhook 
 //stripe listen --forward-to localhost:3000/api/stripe-webhook
 
-
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -26,14 +25,13 @@ generator client {
 }
 
 model Profile {
-  id           String     @id @default(uuid())
-  clerkId      String     @unique
-  firstName    String
-  lastName     String
-  username     String
+  id           String   @id @default(uuid())
+  clerkId      String   @unique
+  nombre       String
+  apellido     String
+  usuario      String
   email        String
-  profileImage String
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-
+  imagenPerfil String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

@@ -1,6 +1,9 @@
 import { SubmitButton } from "@/components/myComponents/form/Buttons"
 import FormContainer from "@/components/myComponents/form/FormContainer"
 
+
+
+
 import FormInput from "@/components/myComponents/form/FormInput"
 import { createProfileAction } from "@/utils/actions"
 
@@ -19,9 +22,9 @@ async function CreateProfile() {
       <div className='border p-8 rounded-md '>
         <FormContainer action={createProfileAction}>
           <div className='grid gap-4 md:grid-cols-2 mt-4 '>
-            <FormInput type='text' name='firstName' label='First Name' />
-            <FormInput type='text' name='lastName' label='Last Name' />
-            <FormInput type='text' name='username' label='Username' />
+            <FormInput type='text' name='nombre' label='nombre' />
+            <FormInput type='text' name='apellido' label='apellido' />
+            <FormInput type='text' name='usuario' label='usuario' />
           </div>
           <SubmitButton text='Create Profile' className='mt-8' />
         </FormContainer>
