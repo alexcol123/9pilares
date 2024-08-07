@@ -9,7 +9,7 @@ const PerfilPage = async () => {
 
   return (
     <section>
-      <h1 className='text-2xl font-semibold mb-8 capitalize'>user perfil</h1>
+      <h1 className='text-2xl font-semibold mb-8 capitalize'>Perfil Usuario</h1>
       <div className='border p-8 rounded-md'>
         {/* image input container */}
 

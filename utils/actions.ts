@@ -1,6 +1,6 @@
 'use server'
 
-import { imageSchema, profileSchema, validateWithZodSchema } from './schemas'
+import { imageSchema, productoSchema, profileSchema, validateWithZodSchema } from './schemas'
 
 import db from './db'
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
@@ -168,4 +168,27 @@ export const updateProfileImageAction = async (
   } catch (error) {
     return renderError(error)
   }
+}
+
+// Productos
+
+export const createProductoAction = async (prevState: any, formData: FormData) => {
+  const user = await getAuthUser()
+  try {
+    const rawData = Object.fromEntries(formData)
+    const validatedFields = validateWithZodSchema(productoSchema, rawData)
+
+    // await db.producto.create({
+    //   data: {
+    //     ...validatedFields,
+    //     perfilId: user.id,
+    //   },
+    // })
+
+    // revalidatePath('/productos')
+    return { message: 'Producto creado' }
+  } catch (error) {
+    return renderError(error)
+  }
+  redirect('/')
 }
