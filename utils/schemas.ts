@@ -56,7 +56,7 @@ export const productoSchema = z.object({
     .string()
     .min(2, { message: 'El tagline debe tener al menos 2 caracteres.' })
     .max(120, { message: 'El tagline debe tener menos de 120 caracteres.' }),
-    
+
   descripcion: z.string().refine(
     (description) => {
       const palabras = description.split(' ').length
@@ -69,7 +69,16 @@ export const productoSchema = z.object({
   precio: z.coerce.number().int().min(1, {
     message: 'El precio debe ser mayor o igual a 1.',
   }),
-  categoria: z.string(),
+  categoria: z.enum([
+    'dragon ball',
+    'demon slayer',
+    'one piece',
+    'naruto',
+    'jujutsu kaisen',
+    'dc',
+    'marvel',
+    'otros'
+  ]),
   // imagenes: z.array(z.string()),
   ancho: z.coerce.number().int().min(0, {
     message: 'El ancho debe ser mayor o igual a 0 centimetros.',
