@@ -35,3 +35,4 @@ export const SubmitButton = ({ className = '', text = 'submit', size = 'lg' }: S
     </Button>
   )
 }
+

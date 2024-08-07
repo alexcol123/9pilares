@@ -49,7 +49,7 @@ model Producto {
   precio        Int
   precioElevado Int
   categoria     String
-  imagenes      String[]
+  imagenes      String[] @default([])
   cantidad      Int?     @default(1)
 
   ancho Int @default(0)

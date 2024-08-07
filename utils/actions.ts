@@ -164,7 +164,7 @@ export const updateProfileImageAction = async (
       },
     })
     revalidatePath('/perfil')
-    return { message: 'Imagend de perfil actualizada' }
+    return { message: 'Imagen de perfil actualizada' }
   } catch (error) {
     return renderError(error)
   }
@@ -174,15 +174,25 @@ export const updateProfileImageAction = async (
 
 export const createProductoAction = async (prevState: any, formData: FormData) => {
   const user = await getAuthUser()
+
+  let productId: null | string = null
+
   try {
     const rawData = Object.fromEntries(formData)
-    // console.log('1', rawData)
-
-
+   
 
     const validatedFields = validateWithZodSchema(productoSchema, rawData)
-    console.log(validatedFields)
+  
+   const producto = await db.producto.create({
+      data: {
+        ...validatedFields,
+        perfilId: user.id,
+      },
+    })
 
+  
+
+    productId = producto.id
 
     //  console.log(validatedFields)
 
@@ -194,9 +204,10 @@ export const createProductoAction = async (prevState: any, formData: FormData) =
     // })
 
     // revalidatePath('/productos')
-    return { message: 'Producto creado' }
+
+
   } catch (error) {
     return renderError(error)
   }
-  redirect('/')
+  redirect(`/mis-productos/crear/imagenes/${productId}`)
 }

@@ -1,13 +1,14 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-function ImageInput() {
-  const name = 'imagenes'
+function ImageInput({ labelName, name = 'image' }: { labelName?: string, name?: string }) {
+
   return (
     <div className='mb-2'>
       <Label htmlFor={name} className='capitalize'>
-        Image
+        {labelName || "imagen"}
       </Label>
+
       <Input
         id={name}
         name={name}

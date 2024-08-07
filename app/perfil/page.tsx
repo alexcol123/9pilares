@@ -19,7 +19,7 @@ const PerfilPage = async () => {
           image={perfil.imagenPerfil}
           name={perfil.nombre}
           action={updateProfileImageAction}
-          text='Actualizar imagen de perfil'
+          text='Actualizar imagen'
         />
 
         <FormContainer action={updateProfileAction}>

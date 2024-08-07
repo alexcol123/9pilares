@@ -1,6 +1,6 @@
 import FormInput from '@/components/myComponents/form/FormInput'
 import FormContainer from '@/components/myComponents/form/FormContainer'
-import { createProductoAction } from '@/utils/actions'
+import { createProductoAction, updateProfileImageAction } from '@/utils/actions'
 import { SubmitButton } from '@/components/myComponents/form/Buttons'
 import FormNumberInput from '@/components/myComponents/form/FormNumberInput'
 import FormSelect from '@/components/myComponents/form/FormSelect'
@@ -9,6 +9,8 @@ import TextAreaInput from '@/components/myComponents/form/FormTextAreaInput'
 import FormCheckBox from '@/components/myComponents/form/FormCheckBox'
 import { Separator } from '@/components/ui/separator'
 import ImageInput from '@/components/myComponents/form/ImageInput'
+import FormMultipleImages from '@/components/myComponents/form/FormMultipleImages'
+import ImageInputContainer from '@/components/myComponents/form/ImageInputContainer'
 
 
 const CrearMisProductosPage = () => {
@@ -22,6 +24,10 @@ const CrearMisProductosPage = () => {
 
         <h3 className='text-lg mb-4 font-medium text-primary mt-4'>* Requerido: <span className='text-secondary-foreground ml-3'>Informacion del Producto</span></h3>
         <Separator orientation='horizontal' className=' mb-6' />
+
+
+
+
 
         <FormContainer action={createProductoAction}>
 
@@ -57,13 +63,17 @@ const CrearMisProductosPage = () => {
 
 
 
-          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Requerido: <span className='text-secondary-foreground ml-3'> Imagenes  del producto</span></h3>
+          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Requerido: <span className='text-secondary-foreground ml-3'> Imagenes  del producto (Maximo 6)</span></h3>
           <Separator orientation='horizontal' className=' mb-6' />
 
-          <div className='grid md:grid-cols-2 gap-8 mb-4'>
+
+
+
+
+          {/* <div className='grid md:grid-cols-2 gap-8 mb-4'>
             <ImageInput />
             <ImageInput />
-          </div>
+          </div> */}
 
 
 
