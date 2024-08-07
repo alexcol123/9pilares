@@ -8,6 +8,7 @@ import { categoria } from '@/utils/arrayLists'
 import TextAreaInput from '@/components/myComponents/form/FormTextAreaInput'
 import FormCheckBox from '@/components/myComponents/form/FormCheckBox'
 import { Separator } from '@/components/ui/separator'
+import ImageInput from '@/components/myComponents/form/ImageInput'
 
 
 const CrearMisProductosPage = () => {
@@ -38,8 +39,7 @@ const CrearMisProductosPage = () => {
             <FormNumberInput name={'precioElevado'} labelName={'* Precio elevado, debe ser mayor que el precio real'} />
             <FormNumberInput name={'precio'} labelName={'* Precio Real ($) en dollares'} />
 
-
-
+            <FormSelect label='* Categoria' name={'categoria'} list={categoria} />
           </div>
 
           <div className='grid md:grid-cols-1 gap-8 mb-4'>
@@ -51,16 +51,21 @@ const CrearMisProductosPage = () => {
               // defaultValue='Super Vegeta 28cm'
               placeholder='¡Añade poder a tu colección con esta impresionante figura de Vegeta en su icónico traje de Super Saiyajin! Detalles realistas.'
             />
+
+            <TextAreaInput name={'descripcion'} labelText={'* Description (10-500 words)'} />
           </div>
 
 
+
+          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Requerido: <span className='text-secondary-foreground ml-3'> Imagenes  del producto</span></h3>
+          <Separator orientation='horizontal' className=' mb-6' />
 
           <div className='grid md:grid-cols-2 gap-8 mb-4'>
-            <FormSelect label='* Categoria' name={'categoria'} list={categoria} />
+            <ImageInput />
+            <ImageInput />
           </div>
 
 
-          <TextAreaInput name={'descripcion'} labelText={'* Description (10-500 words)'} />
 
 
           <h3 className='text-lg mb-2 font-medium text-primary mt-20'>* Requerido: <span className='text-secondary-foreground ml-3'> Precio y Inventario  </span></h3>
@@ -73,6 +78,7 @@ const CrearMisProductosPage = () => {
             <FormNumberInput name={'precioPagado'} labelName={'* Precio Pagado ($) en dollares por 1 articulo'} />
             <FormNumberInput name={'cantidad'} labelName={'* Cantidad disponible (#)'} />
           </div>
+
 
 
 

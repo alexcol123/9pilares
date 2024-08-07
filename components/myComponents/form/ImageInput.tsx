@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 function ImageInput() {
-  const name = 'image'
+  const name = 'imagenes'
   return (
     <div className='mb-2'>
       <Label htmlFor={name} className='capitalize'>
