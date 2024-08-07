@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/select'
 
 
-const FormSelect = ({ name, label, list, isColor = false, defaultValue='' }: { name: string, label?: string, list: any, defaultValue?: any, isColor?: boolean }) => {
+const FormSelect = ({ name, label, list, isColor = false, defaultValue }: { name: string, label?: string, list: any, defaultValue?: any, isColor?: boolean }) => {
 
 
 
@@ -20,10 +20,9 @@ const FormSelect = ({ name, label, list, isColor = false, defaultValue='' }: { n
         {label || name}
       </Label>
       <Select
-      defaultValue={ defaultValue }
+       defaultValue={ defaultValue }
         name={name}
         required
-
       >
         <SelectTrigger id={name} className="mt-1 ">
           {/* <SelectValue placeholder="Select one" /> */}

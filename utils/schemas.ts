@@ -93,7 +93,7 @@ export const productoSchema = z.object({
   peso: z.coerce.number().int().min(0, {
     message: 'El peso debe ser mayor o igual a 0 libra.',
   }),
-  onSale: z.boolean(),
+  onSale:  z.boolean().default(false).optional(),
   descuento: z.coerce.number().int().min(0, {
     message: 'El descuento debe ser mayor o igual a 0.',
   }),

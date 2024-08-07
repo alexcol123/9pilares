@@ -176,7 +176,9 @@ export const createProductoAction = async (prevState: any, formData: FormData) =
   const user = await getAuthUser()
   try {
     const rawData = Object.fromEntries(formData)
-    const validatedFields = validateWithZodSchema(productoSchema, rawData)
+    // const validatedFields = validateWithZodSchema(productoSchema, rawData)
+
+console.log(rawData)
 
     // await db.producto.create({
     //   data: {
