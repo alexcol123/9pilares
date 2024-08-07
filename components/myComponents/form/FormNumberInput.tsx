@@ -7,9 +7,10 @@ type PriceInputProps = {
   defaultValue?: number,
   name: string,
   labelName: string
+  required?: boolean
 }
 
-const FormNumberInput = ({ defaultValue, name , labelName}: PriceInputProps) => {
+const FormNumberInput = ({ defaultValue, name, labelName, required = true }: PriceInputProps) => {
 
 
 
@@ -18,7 +19,7 @@ const FormNumberInput = ({ defaultValue, name , labelName}: PriceInputProps) => 
       <Label
         htmlFor={name}
         className="capitalize" >
-        {labelName ||name}
+        {labelName || name}
       </Label>
       <Input
         type="number"
@@ -26,9 +27,10 @@ const FormNumberInput = ({ defaultValue, name , labelName}: PriceInputProps) => 
         name={name}
         min={0}
         defaultValue={defaultValue}
-        placeholder="29"
+        placeholder="30"
         className="mt-1 "
-        required />
+        required={required}
+      />
     </div>
   )
 }

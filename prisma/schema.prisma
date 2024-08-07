@@ -42,26 +42,28 @@ model Perfil {
 }
 
 model Producto {
-  id          String   @id @default(uuid())
-  nombre      String
-  tagline     String
-  descripcion String
-  precio      Int
-  precioElevado Int?
-  categoria   String
-  imagenes    String[]
-  cantidad    Int?      @default(1)
+  id            String   @id @default(uuid())
+  nombre        String
+  tagline       String
+  descripcion   String
+  precio        Int
+  precioElevado Int
+  categoria     String
+  imagenes      String[]
+  cantidad      Int?     @default(1)
 
-  ancho Int? @default(0)
-  alto  Int? @default(0)
-  largo Int? @default(0)
-  peso  Int? @default(0)
+  ancho Int @default(0)
+  alto  Int @default(0)
+  largo Int @default(0)
+  peso  Int @default(0)
 
-  onSale     Boolean? @default(false)
-  outOfStock Boolean? @default(false)
+  onSale     Boolean @default(false)
+  outOfStock Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  precioPagado Int
 
   perfil   Perfil? @relation(fields: [perfilId], references: [clerkId], onDelete: Cascade)
   perfilId String?

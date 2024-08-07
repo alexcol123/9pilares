@@ -6,10 +6,13 @@ export function validateWithZodSchema<T>(
   data: unknown
 ): T {
   const result = schema.safeParse(data)
+
+  console.log(result.error)
   if (!result.success) {
     const errors = result.error.errors.map((error) => error.message)
 
     throw new Error(errors.join(', '))
+
   }
   return result.data
 }
@@ -69,6 +72,17 @@ export const productoSchema = z.object({
   precio: z.coerce.number().int().min(1, {
     message: 'El precio debe ser mayor o igual a 1.',
   }),
+
+  cantidad: z.coerce.number().int().min(1, {
+    message: 'la cantidad  debe ser mayor o igual a 1.',
+  }),
+  // make precioElevador null
+
+  precioElevado: z.coerce.number({
+    message: 'El precio elevado debe ser mayor o igual a 1.',
+  }),
+
+
   categoria: z.enum([
     'dragon ball',
     'demon slayer',
@@ -93,9 +107,16 @@ export const productoSchema = z.object({
   peso: z.coerce.number().int().min(0, {
     message: 'El peso debe ser mayor o igual a 0 libra.',
   }),
-  onSale:  z.boolean().default(false).optional(),
-  descuento: z.coerce.number().int().min(0, {
-    message: 'El descuento debe ser mayor o igual a 0.',
+  onSale: z.coerce.boolean({
+    message: 'onSale debe ser booleano.',
+  }),
+
+  outOfStock: z.coerce.boolean({
+    message: 'outOfStock debe ser booleano.',
+  }),
+
+  precioPagado: z.coerce.number().int().min(0, {
+    message: 'El precio pagado debe ser mayor o igual a 0. este es el precio que pagaste por el producto. Se utilizara para calcular la ganancia.',
   }),
 
 

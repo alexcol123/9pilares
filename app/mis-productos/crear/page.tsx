@@ -19,10 +19,7 @@ const CrearMisProductosPage = () => {
 
       <div className='border p-8 rounded-md'>
 
-
-
-
-        <h3 className='text-lg mb-4 font-medium text-primary mt-4'>* Requerido: <span className='text-primary-foreground ml-3'>Informacion del Producto</span></h3>
+        <h3 className='text-lg mb-4 font-medium text-primary mt-4'>* Requerido: <span className='text-secondary-foreground ml-3'>Informacion del Producto</span></h3>
         <Separator orientation='horizontal' className=' mb-6' />
 
         <FormContainer action={createProductoAction}>
@@ -32,15 +29,16 @@ const CrearMisProductosPage = () => {
               name='nombre'
               type='text'
               label='* Nombre (50 letras maximo)'
-              defaultValue='Super Vegeta 28cm'
+              // defaultValue='Super Vegeta 28cm'
               placeholder='Super Vegeta 12 pulgadas'
             />
           </div>
 
           <div className='grid md:grid-cols-2 gap-8 mb-4'>
+            <FormNumberInput name={'precioElevado'} labelName={'* Precio elevado, debe ser mayor que el precio real'} />
+            <FormNumberInput name={'precio'} labelName={'* Precio Real ($) en dollares'} />
 
-            <FormNumberInput name={'precio'} labelName={'* Precio ($) en dollares'} defaultValue={10} />
-     
+
 
           </div>
 
@@ -50,32 +48,35 @@ const CrearMisProductosPage = () => {
               name='tagline'
               type='text'
               label='* Tagline (120 letras maximo)'
-              defaultValue='Super Vegeta 28cm'
+              // defaultValue='Super Vegeta 28cm'
               placeholder='¡Añade poder a tu colección con esta impresionante figura de Vegeta en su icónico traje de Super Saiyajin! Detalles realistas.'
             />
           </div>
 
-          <TextAreaInput name={'description'} labelText={'* Description (10-500 words)'} />
+
 
           <div className='grid md:grid-cols-2 gap-8 mb-4'>
-
             <FormSelect label='* Categoria' name={'categoria'} list={categoria} />
-        
-
           </div>
 
 
-          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Opcional: <span className='text-primary-foreground ml-3'> Precio Elevado & Cantidad disponible</span></h3>
+          <TextAreaInput name={'descripcion'} labelText={'* Description (10-500 words)'} />
+
+
+          <h3 className='text-lg mb-2 font-medium text-primary mt-20'>* Requerido: <span className='text-secondary-foreground ml-3'> Precio y Inventario  </span></h3>
+
+          <h3 className='text-sm text-muted-foreground '>Seran usados para calcular tus ganancias y Tu inventario</h3>
+
           <Separator orientation='horizontal' className=' mb-6' />
 
           <div className='grid md:grid-cols-2 gap-8 mb-4'>
-
-            <FormNumberInput name={'precioElevado'} labelName={'Precio elevado, debe ser mayor que el precio a cobrar'} defaultValue={10} />
-            <FormNumberInput name={'cantidad'} labelName={'* Cantidad disponible (#)'} defaultValue={10} />
+            <FormNumberInput name={'precioPagado'} labelName={'* Precio Pagado ($) en dollares por 1 articulo'} />
+            <FormNumberInput name={'cantidad'} labelName={'* Cantidad disponible (#)'} />
           </div>
 
 
-          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Opcional: <span className='text-primary-foreground ml-3'> Tamaño y peso del producto</span></h3>
+
+          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Opcional: <span className='text-secondary-foreground ml-3'> Tamaño y peso del producto</span></h3>
           <Separator orientation='horizontal' className=' mb-6' />
 
           <div className='grid md:grid-cols-2 gap-8 mb-4'>
@@ -87,7 +88,7 @@ const CrearMisProductosPage = () => {
           </div>
 
 
-          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Opcional: <span className='text-primary-foreground ml-3'> En especial y Disponibilidad</span></h3>
+          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Opcional: <span className='text-secondary-foreground ml-3'> En especial y Disponibilidad</span></h3>
           <Separator orientation='horizontal' className=' mb-6' />
 
 
