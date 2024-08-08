@@ -7,38 +7,48 @@ import ImageInput from './ImageInput'
 import { SubmitButton } from './Buttons'
 import { type actionFunction } from '@/utils/types'
 import { LuUser2 } from 'react-icons/lu'
+
+import { CiImageOn } from "react-icons/ci";
+
 import { Button } from '@/components/ui/button'
 
 type ImageInputContainerProps = {
-  image: string
-  name: string
+  image?: string
+  name?: string
   action: actionFunction
   text: string
   children?: React.ReactNode
   multipleImages?: boolean
+  isProfile?: boolean
+  inputName?: string
 }
 
 
 function ImageInputContainer(props: ImageInputContainerProps) {
-  const { image, name, action, text, multipleImages } = props
+  const { image, name, action, text, multipleImages, isProfile = false, inputName } = props
   const [isUpdateFormVisible, setUpdateFormVisible] = useState(false)
 
   const userIcon = (
     <LuUser2 className='w-24 h-24 bg-primary rounded-md text-white mb-4' />
   )
+
+  const imageIcon = (
+    <CiImageOn className='w-24 h-24 bg-primary rounded-md text-white mb-4' />
+  )
+
   return (
     <div>
       {image ? (
         <Image
-   
+
           src={image}
           width={100}
           height={100}
           className='rounded-md object-cover mb-4 w-24 h-24'
-          alt={name}
+          alt={name || 'imagen'}
         />
       ) : (
-        userIcon
+        isProfile ? userIcon : imageIcon
       )}
 
       <Button
@@ -53,7 +63,8 @@ function ImageInputContainer(props: ImageInputContainerProps) {
         <div className='max-w-lg mt-4'>
           <FormContainer action={action}>
             {props.children}
-            <ImageInput      multipleImages={multipleImages} />
+
+            <ImageInput inputName={'test'} multipleImages={multipleImages} />
             <SubmitButton size='sm' />
           </FormContainer>
         </div>

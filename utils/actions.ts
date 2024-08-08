@@ -127,6 +127,8 @@ export const updateProfileAction = async (
   try {
     const rawData = Object.fromEntries(formData)
 
+    console.log(rawData)
+
     const validatedFileds = profileSchema.parse(rawData)
 
     await db.perfil.update({
@@ -150,7 +152,9 @@ export const updateProfileImageAction = async (
 ): Promise<{ message: string }> => {
   const user = await getAuthUser()
   try {
-    const image = formData.get('image') as File
+    const image = formData.get('imagenPerfil') as File
+    // const rawData = Object.fromEntries(formData)
+    // console.log(image)
     const validatedFields = validateWithZodSchema(imageSchema, { image })
 
     const fullPath = await uploadImage(validatedFields.image)
@@ -170,6 +174,35 @@ export const updateProfileImageAction = async (
   }
 }
 
+
+export const updateProductImageAction = async (
+  prevState: any,
+  formData: FormData
+): Promise<{ message: string }> => {
+  const user = await getAuthUser()
+  try {
+    // const image = formData.get('imagenes') as File
+    // console.log(image)
+    const rawData = Object.fromEntries(formData)
+    console.log('rawData------', rawData)
+    // const validatedFields = validateWithZodSchema(imageSchema, { image })
+
+    // const fullPath = await uploadImage(validatedFields.image)
+
+    // await db.perfil.update({
+    //   where: {
+    //     clerkId: user.id,
+    //   },
+    //   data: {
+    //     imagenPerfil: fullPath,
+    //   },
+    // })
+    // revalidatePath('/perfil')
+    return { message: 'Imagen de perfil actualizada' }
+  } catch (error) {
+    return renderError(error)
+  }
+}
 // Productos
 
 export const createProductoAction = async (prevState: any, formData: FormData) => {
@@ -179,18 +212,18 @@ export const createProductoAction = async (prevState: any, formData: FormData) =
 
   try {
     const rawData = Object.fromEntries(formData)
-   
+
 
     const validatedFields = validateWithZodSchema(productoSchema, rawData)
-  
-   const producto = await db.producto.create({
+
+    const producto = await db.producto.create({
       data: {
         ...validatedFields,
         perfilId: user.id,
       },
     })
 
-  
+
 
     productId = producto.id
 

@@ -1,8 +1,14 @@
+'use client'
+
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useState } from "react";
 
-function ImageInput({ labelName, name = 'image', multipleImages = false }: { labelName?: string, name?: string, multipleImages?: boolean }) {
+function ImageInput({ labelName, name = 'image', multipleImages = false, inputName }: { labelName?: string, name?: string, multipleImages?: boolean, inputName?: string }) {
 
+
+
+console.log('value' , name)
   return (
     <div className='mb-2'>
       <Label htmlFor={name} className='capitalize'>
@@ -12,8 +18,9 @@ function ImageInput({ labelName, name = 'image', multipleImages = false }: { lab
       <Input
         multiple={multipleImages}
         id={name}
-        name={name}
+        name={inputName}
         type='file'
+
         required
         accept='image/*'
         className='max-w-xs'
