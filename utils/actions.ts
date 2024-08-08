@@ -175,7 +175,7 @@ export const updateProfileImageAction = async (
 }
 
 
-export const updateProductImageAction = async (
+export const updateProductImagesAction = async (
   prevState: any,
   formData: FormData
 ): Promise<{ message: string }> => {
@@ -185,6 +185,17 @@ export const updateProductImageAction = async (
     // console.log(image)
     const rawData = Object.fromEntries(formData)
     console.log('rawData------', rawData)
+
+const validatedFields = validateWithZodSchema(imageSchema, rawData)
+
+// for (const key in validatedFields) {
+//   const image = validatedFields[key]
+//   const fullPath = await uploadImage(image)
+//   console.log('fullPath------', fullPath)
+// }   
+
+// console.log('validatedFields------', validatedFields)
+
     // const validatedFields = validateWithZodSchema(imageSchema, { image })
 
     // const fullPath = await uploadImage(validatedFields.image)
@@ -198,7 +209,7 @@ export const updateProductImageAction = async (
     //   },
     // })
     // revalidatePath('/perfil')
-    return { message: 'Imagen de perfil actualizada' }
+    return { message: 'Images Uploaded' }
   } catch (error) {
     return renderError(error)
   }

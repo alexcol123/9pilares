@@ -64,7 +64,7 @@ function ImageInputContainer(props: ImageInputContainerProps) {
           <FormContainer action={action}>
             {props.children}
 
-            <ImageInput inputName={'test'} multipleImages={multipleImages} />
+            <ImageInput inputName={'test'}  />
             <SubmitButton size='sm' />
           </FormContainer>
         </div>

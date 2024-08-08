@@ -1,43 +1,32 @@
 'use client'
 import { useState } from 'react'
-import Image from 'next/image'
 
 import FormContainer from './FormContainer'
-import ImageInput from './ImageInput'
+import ImageInputWithPreview from './ImageInputWithPreview'
 import { SubmitButton } from './Buttons'
 import { type actionFunction } from '@/utils/types'
-import { LuUser2 } from 'react-icons/lu'
 
-import { CiImageOn } from "react-icons/ci";
 
 import { Button } from '@/components/ui/button'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
 type MultipleImageInputContainerProps = {
-  image?: string
   name?: string
   action: actionFunction
-  text: string
   children?: React.ReactNode
-  multipleImages?: boolean
-  isProfile?: boolean
-  inputName?: string
+  maximumImages: number
 }
 
 
 function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
-  const { image, name, action, text, multipleImages, isProfile = false, inputName } = props
-
-  // create images from url
-
-
-  // const [isUpdateFormVisible, setUpdateFormVisible] = useState(false)
+  const { name, action, maximumImages = 4 } = props
 
   const [maxImages, setmaxImages] = useState([1])
+  console.log(maxImages)
 
   const newImages = () => {
 
-    maxImages.length < 4
+    maxImages.length < maximumImages
       ? setmaxImages([...maxImages, 1])
       : setmaxImages([...maxImages])
   }
@@ -50,53 +39,52 @@ function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
 
   }
 
-
-
-
   return (
     <div>
-
-      <div className='max-w-lg mt-4'>
+      <div className=' mt-4'>
         <FormContainer action={action}>
           {maxImages.map((_, index) => {
-            return <ImageInput inputName={`Imagen${index + 1}`} multipleImages={multipleImages} key={index}
+            return <ImageInputWithPreview inputName={`Imagen${index + 1}`} key={index}
               labelName={`Imagen ${index + 1}`}
               name={`${name}[${index}]`}
             />
           })}
-          {/* <ImageInput inputName={inputName} multipleImages={multipleImages} />
-          <ImageInput inputName={'test'} multipleImages={multipleImages} /> */}
-          {/* <SubmitButton size='sm' /> */}
-
-
-          <div className="flex gap-6">
-
-            <Button
-              type='button'
-              size={'sm'}
-              variant='default'
-              className='p-2 cursor-pointer my-6'
-              onClick={newImages}
-            >
-              Agregar Mas<FaPlus className='inline-block ml-2' />
-            </Button>
 
 
 
-            <Button
-              type='button'
-              size={'sm'}
-              variant='destructive'
-              className='p-2 cursor-pointer my-6'
-              onClick={removeImages}
-            >
-              Remover Ultima<FaMinus className='inline-block ml-2' />
-            </Button>
+          <div className="grid md:grid-cols-1 mt-14 gap-4  ">
+
+            <div className='flex gap-5 w-full '>
+              <Button
+                type='button'
+                size={'sm'}
+                variant='default'
+                className='p-2 cursor-pointer '
+                onClick={newImages}
+              >
+                Agregar Mas<FaPlus className='inline-block ml-2' />
+              </Button>
+
+
+
+              <Button
+                type='button'
+                size={'sm'}
+                variant='destructive'
+                className='p-2 cursor-pointer '
+                onClick={removeImages}
+              >
+                Remover Ultima<FaMinus className='inline-block ml-2' />
+              </Button>
+            </div>
+
+
+            <div className='flex items-center justify-center w-full mt-10'>
+              <SubmitButton size='lg' text='Submitir Imagenes' />
+            </div>
           </div>
 
-          <div className='mt-16 w-full'>
-            <SubmitButton size='lg' text='Submitir Imagenes ahora' />
-          </div>
+
 
         </FormContainer>
       </div>

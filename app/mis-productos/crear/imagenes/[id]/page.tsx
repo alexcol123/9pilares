@@ -1,6 +1,6 @@
 import FormInput from '@/components/myComponents/form/FormInput'
 import FormContainer from '@/components/myComponents/form/FormContainer'
-import { createProductoAction, updateProductImageAction, updateProfileImageAction } from '@/utils/actions'
+import {  updateProductImagesAction  } from '@/utils/actions'
 import { SubmitButton } from '@/components/myComponents/form/Buttons'
 import FormNumberInput from '@/components/myComponents/form/FormNumberInput'
 import FormSelect from '@/components/myComponents/form/FormSelect'
@@ -16,7 +16,7 @@ import MultipleImageInputContainer from '@/components/myComponents/form/Multiple
 
 
 const AgregarImagensPage = ({ params }: { params: { id: string } }) => {
-
+  const maximumImages: number = parseInt(process.env.MAXIMUN_IMAGES ?? '4');
   return (
     <section>
       <h1 className='text-2xl font-semibold mb-8 capitalize'>
@@ -27,16 +27,16 @@ const AgregarImagensPage = ({ params }: { params: { id: string } }) => {
 
       <div className='border p-8 rounded-md'>
 
-        <h3 className='text-lg mb-4 font-medium text-primary mt-4'>* Requerido: <span className='text-secondary-foreground ml-3'>Informacion del Producto</span></h3>
+        <h3 className='text-lg mb-4 font-medium text-primary mt-4'>* Requerido: <span className='text-secondary-foreground ml-3'>Agregar Imagenes Maximo {maximumImages}</span>
+        </h3>
+
         <Separator orientation='horizontal' className=' mb-6' />
 
         <MultipleImageInputContainer
-          multipleImages={true}
-          inputName={'imagenes'}
-          // image={perfil.imagenPerfil}
+          maximumImages={maximumImages}
           name={'imagenes'}
-          action={updateProductImageAction}
-          text='Actualizar imagen'
+          action={updateProductImagesAction}
+
         />
 
       </div>
