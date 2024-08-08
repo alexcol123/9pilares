@@ -17,7 +17,6 @@ import MultipleImageInputContainer from '@/components/myComponents/form/Multiple
 
 const AgregarImagensPage = ({ params }: { params: { id: string } }) => {
 
-
   return (
     <section>
       <h1 className='text-2xl font-semibold mb-8 capitalize'>
@@ -32,14 +31,14 @@ const AgregarImagensPage = ({ params }: { params: { id: string } }) => {
         <Separator orientation='horizontal' className=' mb-6' />
 
         <MultipleImageInputContainer
-        multipleImages={true}
-        inputName={'imagenes'}
-        // image={perfil.imagenPerfil}
-         name={'imagenes'}
-        action={updateProductImageAction}
-        text='Actualizar imagen'
-      />
-   
+          multipleImages={true}
+          inputName={'imagenes'}
+          // image={perfil.imagenPerfil}
+          name={'imagenes'}
+          action={updateProductImageAction}
+          text='Actualizar imagen'
+        />
+
       </div>
 
     </section>

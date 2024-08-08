@@ -8,7 +8,7 @@ function ImageInput({ labelName, name = 'image', multipleImages = false, inputNa
 
 
 
-console.log('value' , name)
+
   return (
     <div className='mb-2'>
       <Label htmlFor={name} className='capitalize'>

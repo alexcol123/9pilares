@@ -28,6 +28,9 @@ type MultipleImageInputContainerProps = {
 function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
   const { image, name, action, text, multipleImages, isProfile = false, inputName } = props
 
+  // create images from url
+
+
   // const [isUpdateFormVisible, setUpdateFormVisible] = useState(false)
 
   const [maxImages, setmaxImages] = useState([1])
@@ -50,7 +53,6 @@ function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
 
 
 
-
   return (
     <div>
 
@@ -65,41 +67,41 @@ function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
           {/* <ImageInput inputName={inputName} multipleImages={multipleImages} />
           <ImageInput inputName={'test'} multipleImages={multipleImages} /> */}
           {/* <SubmitButton size='sm' /> */}
+
+
+          <div className="flex gap-6">
+
+            <Button
+              type='button'
+              size={'sm'}
+              variant='default'
+              className='p-2 cursor-pointer my-6'
+              onClick={newImages}
+            >
+              Agregar Mas<FaPlus className='inline-block ml-2' />
+            </Button>
+
+
+
+            <Button
+              type='button'
+              size={'sm'}
+              variant='destructive'
+              className='p-2 cursor-pointer my-6'
+              onClick={removeImages}
+            >
+              Remover Ultima<FaMinus className='inline-block ml-2' />
+            </Button>
+          </div>
+
+          <div className='mt-16 w-full'>
+            <SubmitButton size='lg' text='Submitir Imagenes ahora' />
+          </div>
+
         </FormContainer>
       </div>
 
-      <div className="flex gap-3">
 
-
-        <Button
-
-          type='button'
-          size={'sm'}
-          variant='default'
-          className='p-2 cursor-pointer my-6'
-          onClick={newImages}
-        >
-          Agregar Mas<FaPlus className='inline-block ml-2' />
-        </Button>
-
-
-
-        <Button
-
-          type='button'
-          size={'sm'}
-          variant='destructive'
-          className='p-2 cursor-pointer my-6'
-          onClick={removeImages}
-        >
-          Remover Uno<FaMinus className='inline-block ml-2' />
-        </Button>
-
-      </div>
-
-      <div className='mt-16 w-full'>
-      <SubmitButton size='lg'  text='Submitir Imagenes ahora'/>
-      </div>
     </div>
   )
 }
