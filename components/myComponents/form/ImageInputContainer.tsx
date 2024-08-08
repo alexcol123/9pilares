@@ -15,11 +15,12 @@ type ImageInputContainerProps = {
   action: actionFunction
   text: string
   children?: React.ReactNode
+  multipleImages?: boolean
 }
 
 
 function ImageInputContainer(props: ImageInputContainerProps) {
-  const { image, name, action, text } = props
+  const { image, name, action, text, multipleImages } = props
   const [isUpdateFormVisible, setUpdateFormVisible] = useState(false)
 
   const userIcon = (
@@ -29,6 +30,7 @@ function ImageInputContainer(props: ImageInputContainerProps) {
     <div>
       {image ? (
         <Image
+   
           src={image}
           width={100}
           height={100}
@@ -51,7 +53,7 @@ function ImageInputContainer(props: ImageInputContainerProps) {
         <div className='max-w-lg mt-4'>
           <FormContainer action={action}>
             {props.children}
-            <ImageInput />
+            <ImageInput      multipleImages={multipleImages} />
             <SubmitButton size='sm' />
           </FormContainer>
         </div>

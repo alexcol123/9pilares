@@ -16,6 +16,7 @@ const PerfilPage = async () => {
 
 
         <ImageInputContainer
+          multipleImages={false}
           image={perfil.imagenPerfil}
           name={perfil.nombre}
           action={updateProfileImageAction}
