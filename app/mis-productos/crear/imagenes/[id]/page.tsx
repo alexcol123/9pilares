@@ -1,6 +1,6 @@
 import FormInput from '@/components/myComponents/form/FormInput'
 import FormContainer from '@/components/myComponents/form/FormContainer'
-import {  updateProductImagesAction  } from '@/utils/actions'
+import { updateProductImagesAction } from '@/utils/actions'
 import { SubmitButton } from '@/components/myComponents/form/Buttons'
 import FormNumberInput from '@/components/myComponents/form/FormNumberInput'
 import FormSelect from '@/components/myComponents/form/FormSelect'
@@ -33,6 +33,7 @@ const AgregarImagensPage = ({ params }: { params: { id: string } }) => {
         <Separator orientation='horizontal' className=' mb-6' />
 
         <MultipleImageInputContainer
+          productId={params.id}
           maximumImages={maximumImages}
           name={'imagenes'}
           action={updateProductImagesAction}

@@ -9,17 +9,19 @@ import { type actionFunction } from '@/utils/types'
 
 import { Button } from '@/components/ui/button'
 import { FaMinus, FaPlus } from 'react-icons/fa'
+import { Input } from '@/components/ui/input'
 
 type MultipleImageInputContainerProps = {
   name?: string
   action: actionFunction
   children?: React.ReactNode
   maximumImages: number
+  productId?: string
 }
 
 
 function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
-  const { name, action, maximumImages = 4 } = props
+  const { name, action, maximumImages = 4 , productId} = props
 
   const [maxImages, setmaxImages] = useState([1])
   console.log(maxImages)
@@ -44,12 +46,13 @@ function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
       <div className=' mt-4'>
         <FormContainer action={action}>
           {maxImages.map((_, index) => {
-            return <ImageInputWithPreview inputName={`Imagen${index + 1}`} key={index}
+            return <ImageInputWithPreview inputName={`imagen${index + 1}`} key={index}
               labelName={`Imagen ${index + 1}`}
               name={`${name}[${index}]`}
             />
           })}
 
+<input type='hidden' name='productId' value={productId} />
 
 
           <div className="grid md:grid-cols-1 mt-14 gap-4  ">

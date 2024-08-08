@@ -152,12 +152,19 @@ export const updateProfileImageAction = async (
 ): Promise<{ message: string }> => {
   const user = await getAuthUser()
   try {
-    const image = formData.get('imagenPerfil') as File
-    // const rawData = Object.fromEntries(formData)
-    // console.log(image)
-    const validatedFields = validateWithZodSchema(imageSchema, { image })
+    const imagen1 = formData.get('imagen1') as File
+    //  const rawData = Object.fromEntries(formData)
+    //  console.log(rawData)
+    console.log('image  ' + imagen1)
 
-    const fullPath = await uploadImage(validatedFields.image)
+
+    const validatedFields = validateWithZodSchema(imageSchema, { imagen1 })
+
+    if (!validatedFields.imagen1) {
+      throw new Error('No image found')
+    }
+
+    const fullPath = await uploadImage(validatedFields.imagen1)
 
     await db.perfil.update({
       where: {
@@ -180,25 +187,37 @@ export const updateProductImagesAction = async (
   formData: FormData
 ): Promise<{ message: string }> => {
   const user = await getAuthUser()
+
   try {
-    // const image = formData.get('imagenes') as File
-    // console.log(image)
+
+    const productId = formData.get('productId') as string
+
     const rawData = Object.fromEntries(formData)
-    console.log('rawData------', rawData)
 
-const validatedFields = validateWithZodSchema(imageSchema, rawData)
 
-// for (const key in validatedFields) {
-//   const image = validatedFields[key]
-//   const fullPath = await uploadImage(image)
-//   console.log('fullPath------', fullPath)
-// }   
+    const validatedFields = validateWithZodSchema(imageSchema, rawData)
 
-// console.log('validatedFields------', validatedFields)
+    const images = Object.values(validatedFields)
 
-    // const validatedFields = validateWithZodSchema(imageSchema, { image })
+    const imagePaths = await Promise.all(images.map(uploadImage))
+    console.log(imagePaths)
 
-    // const fullPath = await uploadImage(validatedFields.image)
+
+    await db.producto.update({
+      where: {
+        id: productId,
+        perfilId: user.id,
+      },
+      data: {
+        imagenes: {
+          set: imagePaths,
+        },
+      },
+    })
+    // await db.producto.update({
+
+    // })
+
 
     // await db.perfil.update({
     //   where: {
@@ -208,7 +227,7 @@ const validatedFields = validateWithZodSchema(imageSchema, rawData)
     //     imagenPerfil: fullPath,
     //   },
     // })
-    // revalidatePath('/perfil')
+    revalidatePath(`/mis-productos/crear/imagenes/${productId}`)
     return { message: 'Images Uploaded' }
   } catch (error) {
     return renderError(error)

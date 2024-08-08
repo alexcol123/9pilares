@@ -28,14 +28,23 @@ export const profileSchema = z.object({
 
 
 function validateFile() {
+
   const maxUploadSize = 1024 * 1024
   const acceptedFileTypes = ['image/']
+  let filename = ''
   return z
     .instanceof(File)
     .refine((file) => {
+
+      console.log(file)
       return !file || file.size <= maxUploadSize
-    }, `File size must be less than 1 MB`)
+    }, ((file) => ({
+      message: `Imagen:  "${file.name}" debe ser de menos de  1 MB,  `,
+    }
+
+    )))
     .refine((file) => {
+
       return (
 
         !file || acceptedFileTypes.some((type) => file.type.startsWith(type))
@@ -44,8 +53,13 @@ function validateFile() {
 }
 
 export const imageSchema = z.object({
-  image: validateFile()
-
+  // image: validateFile()
+  imagen1: z.optional(validateFile()),
+  imagen2: z.optional(validateFile()),
+  imagen3: z.optional(validateFile()),
+  imagen4: z.optional(validateFile()),
+  imagen5: z.optional(validateFile()),
+  imagen6: z.optional(validateFile()),
 })
 
 
