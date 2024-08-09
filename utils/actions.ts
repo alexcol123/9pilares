@@ -248,16 +248,48 @@ export const createProductoAction = async (prevState: any, formData: FormData) =
   redirect(`/mis-productos/crear/imagenes/${productId}`)
 }
 
-export const fetchAlllProducts = async () => {
+export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?: string, search?: string }) => {
+
+  console.log('fetching poroducts action')
+
+  console.log(categoria)
+  console.log(search)
+
+  console.log('fetching poroducts action end')
 
   const productos = await db.producto.findMany(
 
     {
       where: {
-        outOfStock: false,
-        cantidad: {
-          gt: 0,
-        },
+        categoria: categoria,
+        // outOfStock: false,
+        // cantidad: {
+        //   gt: 0,
+        // },
+
+
+
+        OR: [
+          {
+            nombre: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+          {
+            tagline: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+          {
+            descripcion: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+        ],
+
       },
 
       select: {

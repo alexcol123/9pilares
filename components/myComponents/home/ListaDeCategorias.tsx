@@ -21,20 +21,23 @@ const ListaDeCategorias = ({ categoria, search }: { categoria?: string, search: 
               <Link key={item.name} href={`/?categoria=${item.name}${terminodDeBusqueda}`}>
 
 
-                <article className='relative p-3 flex flex-col items-center cursor-pointer duration-300  w-[90px] md:w-[120px]  lg:w-[170px] xl:w-[220px] select-none'>
+                <article className='relative p-2 flex flex-col items-center cursor-pointer duration-300  w-[90px] md:w-[120px]  lg:w-[170px] xl:w-[220px] select-none'>
 
-                  <div className={`absolute capitalize text-sm  border  top-0 bottom-0  transition left-0 right-0  dark:bg-black/60  bg-black/20  rounded-md px-2 hover:bg-black/40  ${isActive ? ' border-primary' : 'border-primary-foreground'}`}>
+                  <div className={`absolute capitalize text-sm  border  top-0 bottom-0  transition left-0 right-0  dark:bg-black/60  bg-black/20  rounded-md px-2 hover:bg-black/40   ${isActive ? ' border-primary' : 'border-primary-foreground '}`}>
 
-                    <div className="flex items-center justify-center h-full w-full text-[11px] font-semibold">
-                      <p className={`absolute top-1 px-1  rounded ${isActive ? 'bg-primary text-primary-foreground' : 'bg-primary-foreground text-primary'} `}>
+                    <div className="flex items-center justify-center h-full w-full text-[11px]  md:text-[13px]   lg:text-[17px] xl:text-[20px] font-semibold ">
+                      <p className={`absolute top-0 left-0 right-0 p-.5 lg:p-1 text-center  rounded-t-md ${isActive ? 'bg-primary text-primary-foreground' : 'bg-primary-foreground text-primary'} `}>
                         {item.name}</p>
                     </div>
                   </div>
 
 
 
-                  <Image width={500} height={500} src={`/links/${item.imageName}`} alt={item.name} className="object-cover rounded-md  " />
+                  <Image width={500} height={500} src={`/links/${item.imageName}`} alt={item.name} className="object-cover rounded-md  mt-2 md:mt-5 " />
                 </article>
+
+
+
 
 
 
@@ -51,3 +54,20 @@ const ListaDeCategorias = ({ categoria, search }: { categoria?: string, search: 
   )
 }
 export default ListaDeCategorias
+
+
+
+{/* <article className='relative p-3 flex flex-col items-center cursor-pointer duration-300  w-[90px] md:w-[120px]  lg:w-[170px] xl:w-[220px] select-none'>
+
+<div className={`absolute capitalize text-sm  border  top-0 bottom-0  transition left-0 right-0  dark:bg-black/60  bg-black/20  rounded-md px-2 hover:bg-black/40   ${isActive ? ' border-primary' : 'border-primary-foreground '}`}>
+
+  <div className="flex items-center justify-center h-full w-full text-[11px]  md:text-[13px]   lg:text-[17px] xl:text-[20px] font-semibold ">
+    <p className={`absolute top-1 px-1  rounded ${isActive ? 'bg-primary text-primary-foreground' : 'bg-primary-foreground text-primary'} `}>
+      {item.name}</p>
+  </div>
+</div>
+
+
+
+<Image width={500} height={500} src={`/links/${item.imageName}`} alt={item.name} className="object-cover rounded-md  " />
+</article> */}
