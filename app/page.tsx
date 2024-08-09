@@ -1,13 +1,25 @@
+import ContenedorDeProductos from '@/components/myComponents/home/ContenedorDeProductos'
+import ListaDeCategorias from '@/components/myComponents/home/ListaDeCategorias'
+import ListaDeProductos from '@/components/myComponents/home/ListaDeProductos'
 import { Button } from '@/components/ui/button'
 
-function HomePage() {
+function Home({ searchParams }: { searchParams: { categoria: string, search: string } }) {
   return (
-    <div>
-      <h1 className='text-3xl'>HomePage</h1>
-      <Button variant='link' size='lg' className='capitalize m-8'>
-        Click me
-      </Button>
-    </div>
+
+    console.log(searchParams),
+
+    <section>
+      <ListaDeCategorias
+        categoria={searchParams.categoria}
+        search={searchParams.search}
+      />
+
+      <ContenedorDeProductos
+        categoria={searchParams.categoria}
+        search={searchParams.search}
+      />
+    </section>
+
   )
 }
-export default HomePage
+export default Home

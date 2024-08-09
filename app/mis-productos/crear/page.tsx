@@ -4,7 +4,7 @@ import { createProductoAction, updateProfileImageAction } from '@/utils/actions'
 import { SubmitButton } from '@/components/myComponents/form/Buttons'
 import FormNumberInput from '@/components/myComponents/form/FormNumberInput'
 import FormSelect from '@/components/myComponents/form/FormSelect'
-import { categoria } from '@/utils/arrayLists'
+import { listaDeCategorias } from '@/utils/arrayLists'
 import TextAreaInput from '@/components/myComponents/form/FormTextAreaInput'
 import FormCheckBox from '@/components/myComponents/form/FormCheckBox'
 import { Separator } from '@/components/ui/separator'
@@ -45,7 +45,7 @@ const CrearMisProductosPage = () => {
             <FormNumberInput name={'precioElevado'} labelName={'* Precio elevado, debe ser mayor que el precio real'} />
             <FormNumberInput name={'precio'} labelName={'* Precio Real ($) en dollares'} />
 
-            <FormSelect label='* Categoria' name={'categoria'} list={categoria} />
+            <FormSelect label='* Categoria' name={'categoria'} list={listaDeCategorias} />
           </div>
 
           <div className='grid md:grid-cols-1 gap-8 mb-4'>

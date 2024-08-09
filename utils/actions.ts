@@ -180,7 +180,7 @@ export const updateProfileImageAction = async (
     return renderError(error)
   }
 }
-
+// Productos ============================================
 
 export const updateProductImagesAction = async (
   prevState: any,
@@ -193,7 +193,6 @@ export const updateProductImagesAction = async (
     const productId = formData.get('productId') as string
 
     const rawData = Object.fromEntries(formData)
-
 
     const validatedFields = validateWithZodSchema(imageSchema, rawData)
 
@@ -214,26 +213,14 @@ export const updateProductImagesAction = async (
         },
       },
     })
-    // await db.producto.update({
 
-    // })
-
-
-    // await db.perfil.update({
-    //   where: {
-    //     clerkId: user.id,
-    //   },
-    //   data: {
-    //     imagenPerfil: fullPath,
-    //   },
-    // })
     revalidatePath(`/mis-productos/crear/imagenes/${productId}`)
     return { message: 'Images Uploaded' }
   } catch (error) {
     return renderError(error)
   }
 }
-// Productos
+
 
 export const createProductoAction = async (prevState: any, formData: FormData) => {
   const user = await getAuthUser()
@@ -253,24 +240,51 @@ export const createProductoAction = async (prevState: any, formData: FormData) =
       },
     })
 
-
-
     productId = producto.id
-
-    //  console.log(validatedFields)
-
-    // await db.producto.create({
-    //   data: {
-    //     ...validatedFields,
-    //     perfilId: user.id,
-    //   },
-    // })
-
-    // revalidatePath('/productos')
-
 
   } catch (error) {
     return renderError(error)
   }
   redirect(`/mis-productos/crear/imagenes/${productId}`)
 }
+
+export const fetchAlllProducts = async () => {
+
+  const productos = await db.producto.findMany(
+
+    {
+      where: {
+        outOfStock: false,
+        cantidad: {
+          gt: 0,
+        },
+      },
+
+      select: {
+        id: true,
+        nombre: true,
+        tagline: true,
+        descripcion: true,
+        precio: true,
+        precioElevado: true,
+        categoria: true,
+        imagenes: true,
+        cantidad: true,
+
+        onSale: true,
+        outOfStock: true,
+
+
+        perfil: {
+          select: {
+            nombre: true,
+            imagenPerfil: true,
+          },
+        },
+      },
+    }
+
+  )
+  return productos
+}
+
