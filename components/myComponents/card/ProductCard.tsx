@@ -4,52 +4,99 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { UploadIcon } from "@radix-ui/react-icons"
+import { formatCurrency } from "@/utils/format"
+import ProductRating from "./ProductRating"
 
 const ProductCard = ({ producto }: { producto: ProductCardTypes }) => {
   return (
     <Card className="overflow-hidden">
       <CardHeader>
-        <CardTitle>Product Images</CardTitle>
-        <CardDescription>
-          Lipsum dolor sit amet, consectetur adipiscing elit
-        </CardDescription>
+        <CardTitle className="capitalize text-center text-primary">{producto.nombre}</CardTitle>
+        {/* <CardDescription className="text-xs">
+          {producto.tagline}
+        </CardDescription> */}
       </CardHeader>
       <CardContent>
-        <div className="grid gap-2">
-          <Image
-            alt="Product image"
-            className="aspect-square w-full rounded-md object-cover"
-            height="450"
-            src={producto.imagenes[0]}
-            width="450"
-          />
-          <div className="grid grid-cols-3 gap-2">
-            <button>
-              <Image
-                alt="Product image"
-                className="aspect-square w-full rounded-md object-cover"
-                height="140"
-                src={producto.imagenes[1]}
-                width="140"
-              />
-            </button>
-            <button>
-              <Image
-                alt="Product image"
-                className="aspect-square w-full rounded-md object-cover"
-                height="140"
-                src={producto.imagenes[2]}
-                width="140"
-              />
-            </button>
-            <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
-              <UploadIcon className="h-4 w-4 text-muted-foreground" />
-              <span className="sr-only">Upload</span>
-            </button>
+
+        <Image
+          alt="Product image"
+          className="aspect-square w-full rounded-md object-cover"
+          height="450"
+          src={producto.imagenes[0]}
+          width="450"
+        />
+
+      </CardContent>
+
+      <CardFooter className=" flex flex-col   min-w-full ">
+        <div className="min-w-full flex flex-col gap-y-.5">
+          <p className="capitalize text-xs">{producto.tagline}</p>
+
+          <ProductRating />
+
+          <div className="flex  gap-3 items-end   ">
+            <p className="font-semibold   "> {formatCurrency(producto.precio)}</p>
+            <p className="font-semibold  text-sm line-through  mb-[2px] text-destructive "> {formatCurrency(producto.precioElevado)}</p>
           </div>
         </div>
-      </CardContent>
+
+
+
+
+
+
+        {/* <div className="flex justify-between">
+          <Button variant="outline">Cancel</Button>
+          <Button>Deploy</Button>
+        </div> */}
+      </CardFooter>
+
     </Card>
+
+
+    /* <Card className="overflow-hidden">
+    <CardHeader>
+      <CardTitle>Product Images</CardTitle>
+      <CardDescription>
+        Lipsum dolor sit amet, consectetur adipiscing elit
+      </CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="grid gap-2">
+        <Image
+          alt="Product image"
+          className="aspect-square w-full rounded-md object-cover"
+          height="450"
+          src={producto.imagenes[0]}
+          width="450"
+        />
+        <div className="grid grid-cols-3 gap-2">
+          <button>
+            <Image
+              alt="Product image"
+              className="aspect-square w-full rounded-md object-cover"
+              height="140"
+              src={producto.imagenes[1]}
+              width="140"
+            />
+          </button>
+          <button>
+            <Image
+              alt="Product image"
+              className="aspect-square w-full rounded-md object-cover"
+              height="140"
+              src={producto.imagenes[2]}
+              width="140"
+            />
+          </button>
+          <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+            <UploadIcon className="h-4 w-4 text-muted-foreground" />
+            <span className="sr-only">Upload</span>
+          </button>
+        </div>
+      </div>
+    </CardContent>
+    </Card> */
 
 
 
