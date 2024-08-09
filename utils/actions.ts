@@ -250,12 +250,7 @@ export const createProductoAction = async (prevState: any, formData: FormData) =
 
 export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?: string, search?: string }) => {
 
-  console.log('fetching poroducts action')
 
-  console.log(categoria)
-  console.log(search)
-
-  console.log('fetching poroducts action end')
 
   const productos = await db.producto.findMany(
 

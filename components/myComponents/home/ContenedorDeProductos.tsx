@@ -1,11 +1,12 @@
 import { fetchAllProducts } from "@/utils/actions"
 import ListaVacia from "./ListaVacia"
+import ListaDeProductos from "./ListaDeProductos"
 
 const ContenedorDeProductos = async ({ categoria, search }: { categoria?: string, search?: string }) => {
 
 
   const productos = await fetchAllProducts({ categoria, search })
-  // console.log(productos)
+   console.log(productos)
   if (productos.length === 0) {
     return <ListaVacia />
   }
@@ -13,7 +14,7 @@ const ContenedorDeProductos = async ({ categoria, search }: { categoria?: string
 
 
   return (
-    <div>ContenedorDeProductos</div>
+  <ListaDeProductos productos={productos} />
   )
 }
 export default ContenedorDeProductos
