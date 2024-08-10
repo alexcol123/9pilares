@@ -39,6 +39,7 @@ model Perfil {
   updatedAt    DateTime @updatedAt
 
   productos Producto[]
+  favoritos Favorito[]
 }
 
 model Producto {
@@ -67,4 +68,18 @@ model Producto {
 
   perfil   Perfil? @relation(fields: [perfilId], references: [clerkId], onDelete: Cascade)
   perfilId String?
+
+  favoritos Favorito[]
+}
+
+model Favorito {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Perfil     Perfil?   @relation(fields: [perfilId], references: [clerkId], onDelete: Cascade)
+  perfilId   String?
+
+  Producto   Producto? @relation(fields: [productoId], references: [id] , onDelete: Cascade)
+  productoId String?
 }

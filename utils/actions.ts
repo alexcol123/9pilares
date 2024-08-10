@@ -315,3 +315,56 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
   return productos
 }
 
+// Favoritos ============================================
+
+export const fetchFavoriteId = async ({
+  productoId,
+}: {
+  productoId: string
+}) => {
+  const user = await getAuthUser()
+
+  const favorite = await db.favorito.findFirst({
+    where: {
+      productoId,
+      perfilId: user.id,
+    },
+    select: {
+      id: true,
+    },
+  })
+
+  return favorite?.id || null
+}
+
+
+export const toggleFavoriteAction = async (prevState: {
+  productoId: string;
+  favoriteId: string | null;
+  pathname: string;
+}) => {
+
+  const user = await getAuthUser()
+
+  const { productoId, favoriteId, pathname } = prevState
+
+
+  try {
+    if (favoriteId) {
+      await db.favorito.delete({
+        where: { id: favoriteId }
+      })
+    } else {
+      await db.favorito.create({
+        data: {
+          perfilId: user.id,
+          productoId
+        }
+      })
+    }
+  } catch (error) {
+    return renderError(error)
+  }
+  revalidatePath(pathname)
+  return { message: favoriteId ? 'Vehicle removed from favorites' : 'Vehicle added to favorites' }
+}

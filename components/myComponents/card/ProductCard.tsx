@@ -6,52 +6,93 @@ import Link from "next/link"
 import { UploadIcon } from "@radix-ui/react-icons"
 import { formatCurrency } from "@/utils/format"
 import ProductRating from "./ProductRating"
+import FavoriteToggleButton from "./FavoriteToggleButton"
 
 const ProductCard = ({ producto }: { producto: ProductCardTypes }) => {
   return (
-    <Card className="overflow-hidden">
-      <CardHeader>
-        <CardTitle className="capitalize text-center text-primary">{producto.nombre}</CardTitle>
-        {/* <CardDescription className="text-xs">
-          {producto.tagline}
-        </CardDescription> */}
-      </CardHeader>
-      <CardContent>
+    <Card className=" relative w-full max-w-xs rounded-xl border bg-muted ">
 
-        <Image
-          alt="Product image"
-          className="aspect-square w-full rounded-md object-cover"
-          height="450"
-          src={producto.imagenes[0]}
-          width="450"
-        />
+      <Link href={`/productos/${producto.id}`}>
 
-      </CardContent>
+        <div className="grid gap-4 p-4">
+          <div className="  aspect-[4/5] w-full overflow-hidden rounded-xl">
+            <Image
+              alt="Product image"
+              className="aspect-[4/5] object-cover border w-full"
+              height="450"
+              src={producto.imagenes[0]}
+              width="450"
+            />
 
-      <CardFooter className=" flex flex-col   min-w-full ">
-        <div className="min-w-full flex flex-col gap-y-.5">
-          <p className="capitalize text-xs">{producto.tagline}</p>
 
-          <ProductRating />
 
-          <div className="flex  gap-3 items-end   ">
-            <p className="font-semibold   "> {formatCurrency(producto.precio)}</p>
-            <p className="font-semibold  text-sm line-through  mb-[2px] text-destructive "> {formatCurrency(producto.precioElevado)}</p>
           </div>
+          <div className="grid gap-1 w-full">
+            <h3 className="font-semibold text-md  capitalize text-center w-full">{producto.nombre}</h3>
+
+            <ProductRating />
+
+
+            <div className="flex  gap-3 items-end   ">
+              <p className="font-semibold   "> {formatCurrency(producto.precio)}</p>
+              <p className="font-semibold  text-sm line-through  mb-[2px] text-destructive "> {formatCurrency(producto.precioElevado)}</p>
+            </div>
+
+
+            <p className="text-xs  capitalize  text-secondary-foreground">{producto.tagline}</p>
+          </div>
+          <Button size="sm">Add to cart</Button>
         </div>
+      </Link>
 
-
-
-
-
-
-        {/* <div className="flex justify-between">
-          <Button variant="outline">Cancel</Button>
-          <Button>Deploy</Button>
-        </div> */}
-      </CardFooter>
-
+      <div className=" absolute top-8 right-6">
+        <FavoriteToggleButton productoId={producto.id} />
+      </div>
     </Card>
+
+    // <Card className="overflow-hidden ">
+    //   <CardHeader>
+    //     <CardTitle className="capitalize text-center text-primary">{producto.nombre}</CardTitle>
+    //     {/* <CardDescription className="text-xs">
+    //       {producto.tagline}
+    //     </CardDescription> */}
+    //   </CardHeader>
+    //   <CardContent className="m-0">
+
+    //     <Image
+    //       alt="Product image"
+    //       className="aspect-square w-full rounded-md object-cover"
+    //       height="450"
+    //       src={producto.imagenes[0]}
+    //       width="450"
+    //     />
+
+    //   </CardContent>
+
+    //   <CardFooter className=" flex flex-col   min-w-full ">
+    //     <div className="min-w-full flex flex-col gap-y-.5">
+    //       <p className="capitalize text-xs">{producto.tagline}</p>
+
+    //       <ProductRating />
+
+    //       <div className="flex  gap-3 items-end   ">
+    //         <p className="font-semibold   "> {formatCurrency(producto.precio)}</p>
+    //         <p className="font-semibold  text-sm line-through  mb-[2px] text-destructive "> {formatCurrency(producto.precioElevado)}</p>
+    //       </div>
+    //     </div>
+
+
+
+
+
+
+    //     {/* <div className="flex justify-between">
+    //       <Button variant="outline">Cancel</Button>
+    //       <Button>Deploy</Button>
+    //     </div> */}
+    //   </CardFooter>
+
+    // </Card>
 
 
     /* <Card className="overflow-hidden">
