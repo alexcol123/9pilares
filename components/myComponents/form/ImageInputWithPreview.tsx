@@ -27,8 +27,8 @@ function ImageInputWithPreview({ labelName, name = 'image', inputName }: { label
   }, [imagePreview]);
 
   return (
-    <div className="grid  md:grid-cols-2 items-center justify-center gap-4 border-2 p-6 rounded-sm w-full my-2 ">
-      <div className='mb-2 '>
+    <div className="grid  grid-cols-1 sm:grid-cols-2 items-center justify-center gap-4 border-2 p-2 rounded-sm w-full my-2 ">
+      <div className=' m-2  md:m-4  '>
         <Label htmlFor={name} className='capitalize'>
           {labelName || "imagen"}
         </Label>
@@ -39,7 +39,7 @@ function ImageInputWithPreview({ labelName, name = 'image', inputName }: { label
           type='file'
           required
           accept='image/*'
-          className='max-w-xs'
+          className='max-w-sm  mt-2 aspect-[4/5] object-cover border bg-muted px-4'
           onChange={(e) => handleImageChange(e)}
         />
       </div>
@@ -49,9 +49,9 @@ function ImageInputWithPreview({ labelName, name = 'image', inputName }: { label
         <div className="w-full mx-auto ">
           <Image
             src={imagePreview}
-            width={100}
-            height={100}
-            className='rounded-md object-cover mb-4 w-32 h-24 mx-auto my-auto'
+            width={120}
+            height={150}
+            className='rounded-md object-cover mb-1 mx-auto my-auto aspect-[4/5]'
             alt='imagen'
           />
         </div>

@@ -1,16 +1,8 @@
-import FormInput from '@/components/myComponents/form/FormInput'
-import FormContainer from '@/components/myComponents/form/FormContainer'
+
 import { updateProductImagesAction } from '@/utils/actions'
-import { SubmitButton } from '@/components/myComponents/form/Buttons'
-import FormNumberInput from '@/components/myComponents/form/FormNumberInput'
-import FormSelect from '@/components/myComponents/form/FormSelect'
-import { categoria } from '@/utils/arrayLists'
-import TextAreaInput from '@/components/myComponents/form/FormTextAreaInput'
-import FormCheckBox from '@/components/myComponents/form/FormCheckBox'
+
 import { Separator } from '@/components/ui/separator'
-import ImageInput from '@/components/myComponents/form/ImageInput'
-import FormMultipleImages from '@/components/myComponents/form/FormMultipleImages'
-import ImageInputContainer from '@/components/myComponents/form/ImageInputContainer'
+
 import MultipleImageInputContainer from '@/components/myComponents/form/MultipleImageInputContainer'
 
 

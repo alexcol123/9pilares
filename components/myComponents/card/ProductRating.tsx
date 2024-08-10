@@ -55,7 +55,10 @@ async function ProductRating(
   return (
     <div className="flex items-center ">
       {starsRatingDiv}
-      {count && <span className="text-sm  ml-1">({count})</span>}
+      {/* {count && <span className="text-sm  ml-1">({count})</span>} */}
+      {/* <p className="text-xs ml-1">
+       (15 vendidos)
+      </p> */}
 
     </div>
   )
