@@ -8,8 +8,6 @@ import { useEffect, useState } from "react";
 function ImageInput({ labelName, name = 'image',  inputName }: { labelName?: string, name?: string, inputName?: string }) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-console.log(imagePreview)
-
 const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   const file = event.target.files?.[0];
 

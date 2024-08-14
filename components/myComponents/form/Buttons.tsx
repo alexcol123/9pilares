@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 
 import { SignInButton } from '@clerk/nextjs'
 import { FaRegHeart, FaHeart } from 'react-icons/fa'
-import { LuTrash2, LuPenSquare } from 'react-icons/lu'
 
 
 type btnSize = 'default' | 'sm' | 'lg'
@@ -57,11 +56,11 @@ export const CardSignInButton = () => {
 export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
   const { pending } = useFormStatus()
 
-  return <Button type='submit' size='icon' variant='outline' className=' cursor-pointer bg-muted hover:bg-muted'>
+  return <Button type='submit' size='icon' variant='outline' className=' cursor-pointer bg-muted '>
     {pending ? <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
       : isFavorite
-        ? <FaHeart size={21} className='text-primary' />
-        : <FaRegHeart size={21} />}
+        ? <FaHeart size={21} className=' text-destructive' />
+        : <FaRegHeart size={21} className='' />}
   </Button>
 
 }

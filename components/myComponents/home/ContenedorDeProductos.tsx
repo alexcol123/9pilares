@@ -6,7 +6,7 @@ const ContenedorDeProductos = async ({ categoria, search }: { categoria?: string
 
 
   const productos = await fetchAllProducts({ categoria, search })
-   console.log(productos)
+
   if (productos.length === 0) {
     return <ListaVacia />
   }

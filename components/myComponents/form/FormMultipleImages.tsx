@@ -12,7 +12,7 @@ const FormMultipleImages = ({ name }: { name: string }) => {
 
   const [maxImages, setmaxImages] = useState([1])
 
-  console.log(maxImages)
+
 
   const newImages = () => {
 

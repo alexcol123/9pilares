@@ -36,7 +36,7 @@ function validateFile() {
     .instanceof(File)
     .refine((file) => {
 
-      console.log(file)
+      // console.log(file)
       return !file || file.size <= maxUploadSize
     }, ((file) => ({
       message: `Imagen:  "${file.name}" debe ser de menos de  1 MB,  `,

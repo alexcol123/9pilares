@@ -36,12 +36,10 @@ const renderError = (error: unknown): { message: string } => {
 export const testingAction = async (prevState: any,
   formData: FormData) => {
 
-  console.log(formData)
-  console.log('form data above this fking line -----------------')
 
 
   const firstName = formData.get('firstName') as string
-  console.log(firstName)
+
   // create a 2 second delay to simulate a server request
   await new Promise((resolve) => setTimeout(resolve, 3000))
 
@@ -127,8 +125,6 @@ export const updateProfileAction = async (
   try {
     const rawData = Object.fromEntries(formData)
 
-    console.log(rawData)
-
     const validatedFileds = profileSchema.parse(rawData)
 
     await db.perfil.update({
@@ -154,9 +150,6 @@ export const updateProfileImageAction = async (
   try {
     const imagen1 = formData.get('imagen1') as File
     //  const rawData = Object.fromEntries(formData)
-    //  console.log(rawData)
-    console.log('image  ' + imagen1)
-
 
     const validatedFields = validateWithZodSchema(imageSchema, { imagen1 })
 
@@ -343,18 +336,16 @@ export const toggleFavoriteAction = async (prevState: {
   favoriteId: string | null;
   pathname: string;
 }) => {
-
   const user = await getAuthUser()
-
   const { productoId, favoriteId, pathname } = prevState
-
+  // console.log({ productoId, favoriteId, pathname })
 
   try {
-    if (favoriteId) {
+    if(favoriteId){
       await db.favorito.delete({
-        where: { id: favoriteId }
+        where: { id: favoriteId } 
       })
-    } else {
+    }else{
       await db.favorito.create({
         data: {
           perfilId: user.id,
@@ -362,9 +353,42 @@ export const toggleFavoriteAction = async (prevState: {
         }
       })
     }
+
   } catch (error) {
     return renderError(error)
+
   }
-  revalidatePath(pathname)
-  return { message: favoriteId ? 'Vehicle removed from favorites' : 'Vehicle added to favorites' }
+    revalidatePath(pathname)
+    return { message: favoriteId ? 'Removida de favoritos' : 'Agregado a tus Favoritos 🎉' }
 }
+
+// export const toggleFavoriteAction = async (prevState: {
+//   productoId: string;
+//   favoriteId: string | null;
+//   pathname: string;
+// }) => {
+
+//   const user = await getAuthUser()
+
+//   const { productoId, favoriteId, pathname } = prevState
+
+
+//   try {
+//     if (favoriteId) {
+//       await db.favorito.delete({
+//         where: { id: favoriteId }
+//       })
+//     } else {
+//       await db.favorito.create({
+//         data: {
+//           perfilId: user.id,
+//           productoId
+//         }
+//       })
+//     }
+//   } catch (error) {
+//     return renderError(error)
+//   }
+//   revalidatePath(pathname)
+//   return { message: favoriteId ? 'Removida de favoritos' : 'Agregado a tus Favoritos 🎉' }
+// }

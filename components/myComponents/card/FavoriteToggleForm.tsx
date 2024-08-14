@@ -12,10 +12,10 @@ type FavoriteToggleFormProps = {
   favoriteId: string | null
 }
 
-function FavoriteToggleForm({ productoId,
-  favoriteId, }: FavoriteToggleFormProps) {
+const FavoriteToggleForm = ({productoId, favoriteId}:FavoriteToggleFormProps) => {
 
   const pathname = usePathname()
+
   const toggleAction = toggleFavoriteAction.bind(null, {
     productoId,
     favoriteId,
@@ -29,3 +29,4 @@ function FavoriteToggleForm({ productoId,
   )
 }
 export default FavoriteToggleForm
+

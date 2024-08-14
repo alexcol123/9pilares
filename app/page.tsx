@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 function Home({ searchParams }: { searchParams: { categoria: string, search: string } }) {
   return (
 
-    console.log(searchParams),
+    // console.log(searchParams),
 
     <section>
       <ListaDeCategorias

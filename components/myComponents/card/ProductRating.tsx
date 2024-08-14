@@ -24,7 +24,7 @@ async function ProductRating(
   const ratingArray = Array.from({ length: 5 }, (_, i) => {
 
 
-    console.log(ratingPlaceholder)
+    // console.log(ratingPlaceholder)
 
     if (ratingPlaceholder >= 1) {
       ratingPlaceholder -= 1
