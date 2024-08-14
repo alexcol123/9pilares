@@ -270,12 +270,12 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
               mode: 'insensitive',
             },
           },
-          {
-            descripcion: {
-              contains: search,
-              mode: 'insensitive',
-            },
-          },
+          // {
+          //   descripcion: {
+          //     contains: search,
+          //     mode: 'insensitive',
+          //   },
+          // },
         ],
 
       },
