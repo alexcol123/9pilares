@@ -1,7 +1,9 @@
+import LoadingCards from '@/components/myComponents/card/LoadingCards'
 import ContenedorDeProductos from '@/components/myComponents/home/ContenedorDeProductos'
 import ListaDeCategorias from '@/components/myComponents/home/ListaDeCategorias'
 import ListaDeProductos from '@/components/myComponents/home/ListaDeProductos'
 import { Button } from '@/components/ui/button'
+import { Suspense } from 'react'
 
 function Home({ searchParams }: { searchParams: { categoria: string, search: string } }) {
   return (
@@ -14,10 +16,15 @@ function Home({ searchParams }: { searchParams: { categoria: string, search: str
         search={searchParams.search}
       />
 
-      <ContenedorDeProductos
-        categoria={searchParams.categoria}
-        search={searchParams.search}
-      />
+
+      <Suspense fallback={<LoadingCards />}>
+
+        <ContenedorDeProductos
+          categoria={searchParams.categoria}
+          search={searchParams.search}
+        />
+      </Suspense>
+
     </section>
 
   )
