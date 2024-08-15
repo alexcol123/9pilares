@@ -399,3 +399,15 @@ export const fetchFavorites = async () => {
 
   return favoritos.map((fav) => fav.Producto)
 }
+
+
+export const fetchUnProducto = async (productoId: string) => {
+
+  const producto = await db.producto.findUnique({
+    where: {
+      id: productoId,
+    },
+  })
+
+  return producto
+}
