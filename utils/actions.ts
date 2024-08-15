@@ -341,11 +341,11 @@ export const toggleFavoriteAction = async (prevState: {
   // console.log({ productoId, favoriteId, pathname })
 
   try {
-    if(favoriteId){
+    if (favoriteId) {
       await db.favorito.delete({
-        where: { id: favoriteId } 
+        where: { id: favoriteId }
       })
-    }else{
+    } else {
       await db.favorito.create({
         data: {
           perfilId: user.id,
@@ -358,37 +358,44 @@ export const toggleFavoriteAction = async (prevState: {
     return renderError(error)
 
   }
-    revalidatePath(pathname)
-    return { message: favoriteId ? 'Removida de favoritos' : 'Agregado a tus Favoritos 🎉' }
+  revalidatePath(pathname)
+  return { message: favoriteId ? 'Removida de favoritos' : 'Agregado a tus Favoritos 🎉' }
 }
 
-// export const toggleFavoriteAction = async (prevState: {
-//   productoId: string;
-//   favoriteId: string | null;
-//   pathname: string;
-// }) => {
+export const fetchFavorites = async () => {
+  const user = await getAuthUser()
 
-//   const user = await getAuthUser()
+  const favoritos = await db.favorito.findMany({
+    where: {
+      perfilId: user.id,
+    },
+    select: {
+      Producto: {
+        select: {
+          id: true,
+          nombre: true,
+          tagline: true,
+          descripcion: true,
+          precio: true,
+          precioElevado: true,
+          categoria: true,
+          imagenes: true,
+          cantidad: true,
 
-//   const { productoId, favoriteId, pathname } = prevState
+          onSale: true,
+          outOfStock: true,
 
 
-//   try {
-//     if (favoriteId) {
-//       await db.favorito.delete({
-//         where: { id: favoriteId }
-//       })
-//     } else {
-//       await db.favorito.create({
-//         data: {
-//           perfilId: user.id,
-//           productoId
-//         }
-//       })
-//     }
-//   } catch (error) {
-//     return renderError(error)
-//   }
-//   revalidatePath(pathname)
-//   return { message: favoriteId ? 'Removida de favoritos' : 'Agregado a tus Favoritos 🎉' }
-// }
+          perfil: {
+            select: {
+              nombre: true,
+              imagenPerfil: true,
+            },
+          },
+        },
+      },
+    },
+  })
+
+  return favoritos.map((fav) => fav.Producto)
+}

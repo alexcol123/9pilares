@@ -9,6 +9,9 @@ import ProductRating from "./ProductRating"
 import FavoriteToggleButton from "./FavoriteToggleButton"
 
 const ProductCard = ({ producto }: { producto: ProductCardTypes }) => {
+
+  if (!producto) return null
+
   return (
     <Card className=" relative w-full max-w-xs rounded-xl border bg-muted ">
 
@@ -20,7 +23,7 @@ const ProductCard = ({ producto }: { producto: ProductCardTypes }) => {
               alt="Product image"
               className="aspect-[4/5] object-cover border w-full"
               height="450"
-              src={producto.imagenes[0]}
+              src={producto.imagenes[0] || '/images/placeholder.png'}
               width="450"
             />
 
@@ -42,7 +45,7 @@ const ProductCard = ({ producto }: { producto: ProductCardTypes }) => {
 
 
           </div>
-          <Button  size="sm">Add to cart</Button>
+          <Button size="sm">Add to cart</Button>
         </div>
       </Link>
 
@@ -51,7 +54,7 @@ const ProductCard = ({ producto }: { producto: ProductCardTypes }) => {
       </div>
     </Card>
 
-  
+
   )
 }
 export default ProductCard
