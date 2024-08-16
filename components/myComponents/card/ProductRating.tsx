@@ -2,20 +2,15 @@
 import { count } from "console";
 import { FaStar } from "react-icons/fa6";
 
-import { FaStarHalf } from "react-icons/fa6";
+import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { FaRegStar } from "react-icons/fa6";
 
 
 async function ProductRating(
-  // { vehicleId, inPage }: { vehicleId: string, inPage: boolean }
+  { size =15 }: { size?: number }
 ) {
-  // temp
 
-  // const {rating , count} = await fetchVehicleRating(vehicleId)  
 
-  // const { rating, count } = await fetchVehicleRating(vehicleId)
-
-  // if (count === 0) { return null }
 
   let count = 10
   const rating = 3.5
@@ -39,14 +34,14 @@ async function ProductRating(
 
   })
 
-  const starsRatingDiv = <div className="flex">
+  const starsRatingDiv = <div className="flex my-1">
     {ratingArray.map((rating, index) => {
       if (rating === 'full') {
-        return <FaStar key={index} className='w-3 h-3 text-primary' />
+        return <FaStar key={index} size={size} className=' text-primary' />
       } else if (rating === 'half') {
-        return <FaStarHalf key={index} className='w-3 h-3 text-primary' />
+        return <FaRegStarHalfStroke key={index}size={size} className=' text-primary' />
       } else {
-        return <FaRegStar key={index} className='w-3 h-3 text-gray-300' />
+        return <FaRegStar key={index}size={size} className=' text-primary' />
       }
     })}
 

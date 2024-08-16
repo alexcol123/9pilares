@@ -35,9 +35,9 @@ const ImagenesCarousel = ({ images , nombre}: { images: string[], nombre: string
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index}>
-            <div className="p-1">
+            <div className="">
               <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
+                <CardContent className="flex aspect-square items-center justify-center p-3">
                   <Image src={image as string} alt={nombre} className="object-cover" width={500} height={500} />
 
                 </CardContent>

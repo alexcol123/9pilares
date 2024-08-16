@@ -55,10 +55,10 @@ model Producto {
   cantidad Int? @default(1)
   vendidos Int? @default(0)
 
-  ancho Int @default(0)
-  alto  Int @default(0)
-  largo Int @default(0)
-  peso  Int @default(0)
+  ancho Int? @default(0)
+  alto  Int? @default(0)
+  largo Int? @default(0)
+  peso  Int? @default(0)
 
   onSale     Boolean @default(false)
   outOfStock Boolean @default(false)

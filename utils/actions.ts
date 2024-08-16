@@ -207,11 +207,13 @@ export const updateProductImagesAction = async (
       },
     })
 
-    revalidatePath(`/mis-productos/crear/imagenes/${productId}`)
-    return { message: 'Images Uploaded' }
+    // revalidatePath(`/mis-productos/crear/imagenes/${productId}`)
+    // return { message: 'Images Uploaded' }
   } catch (error) {
     return renderError(error)
   }
+
+  redirect('/')
 }
 
 
@@ -224,7 +226,11 @@ export const createProductoAction = async (prevState: any, formData: FormData) =
     const rawData = Object.fromEntries(formData)
 
 
+
     const validatedFields = validateWithZodSchema(productoSchema, rawData)
+
+    // console.log(validatedFields)
+    // return { message: 'Producto creado' }
 
     const producto = await db.producto.create({
       data: {
@@ -248,15 +254,14 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
   const productos = await db.producto.findMany(
 
     {
+
+
       where: {
         categoria: categoria,
         // outOfStock: false,
         // cantidad: {
         //   gt: 0,
         // },
-
-
-
         OR: [
           {
             nombre: {
@@ -278,7 +283,9 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
           // },
         ],
 
+
       },
+
 
       select: {
         id: true,
@@ -301,9 +308,12 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
             imagenPerfil: true,
           },
         },
+
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     }
-
   )
   return productos
 }
@@ -406,6 +416,33 @@ export const fetchUnProducto = async (productoId: string) => {
   const producto = await db.producto.findUnique({
     where: {
       id: productoId,
+
+    },
+    select: {
+      id: true,
+      nombre: true,
+      tagline: true,
+      descripcion: true,
+      precio: true,
+      precioElevado: true,
+      categoria: true,
+      imagenes: true,
+      cantidad: true,
+
+      onSale: true,
+      outOfStock: true,
+
+      alto: true,
+      largo: true,
+      ancho: true,
+
+      perfil: {
+        select: {
+          nombre: true,
+          imagenPerfil: true,
+        },
+      },
+
     },
   })
 

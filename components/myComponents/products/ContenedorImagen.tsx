@@ -6,7 +6,7 @@ const ContenedorImagen = ({ imagenes, nombre }: { imagenes: string[], nombre: st
 
 
   return (
-    <section className="m-5">
+    <section className="m-4">
       {/* <Image src={imagenes[0]} fill sizes='100vw' alt={nombre} className=" aspect-square object-cover " priority /> */}
 
 

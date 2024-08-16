@@ -63,19 +63,6 @@ const CrearMisProductosPage = () => {
 
 
 
-          <h3 className='text-lg mb-4 font-medium text-primary mt-20'>Requerido: <span className='text-secondary-foreground ml-3'> Imagenes  del producto (Maximo 6)</span></h3>
-          <Separator orientation='horizontal' className=' mb-6' />
-
-
-
-
-
-          {/* <div className='grid md:grid-cols-2 gap-8 mb-4'>
-            <ImageInput />
-            <ImageInput />
-          </div> */}
-
-
 
 
           <h3 className='text-lg mb-2 font-medium text-primary mt-20'>* Requerido: <span className='text-secondary-foreground ml-3'> Precio y Inventario  </span></h3>
