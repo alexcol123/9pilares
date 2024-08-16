@@ -14,10 +14,12 @@ const siteName = process.env.SITE_NAME
 const Logo = () => {
   return (
 
-    <Button size={'default'} asChild >
-      <Link href='/' className="flex  items-center justify-center gap-2">
 
-        <p className=" tracking-wider text-lg ">{siteName?.substring(0, 1)}
+    
+    <Button size={'default'} asChild >
+      <Link href='/' className="flex max-w-fit  items-center justify-center gap-2">
+
+        <p className="hidden sm:flex tracking-wider text-lg ">{siteName?.substring(0, 1)}
           <span className="opacity-90 text-secondary-foreground ml-0.5">{siteName?.substring(1)}</span>
         </p>
 

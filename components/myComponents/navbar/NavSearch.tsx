@@ -38,7 +38,7 @@ function NavSearch() {
     <Input
       type='search'
       placeholder='Busca por nombre...'
-      className='max-w-xs dark:bg-muted '
+      className='max-w-sm dark:bg-muted '
       value={busqueda}
       onChange={(e) => {
         setBusqueda(e.target.value)
