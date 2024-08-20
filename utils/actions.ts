@@ -1,6 +1,6 @@
 'use server'
 
-import { imageSchema, productoSchema, profileSchema, validateWithZodSchema } from './schemas'
+import { createReviewSchema, imageSchema, productoSchema, profileSchema, validateWithZodSchema } from './schemas'
 
 import db from './db'
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
@@ -451,12 +451,46 @@ export const fetchUnProducto = async (productoId: string) => {
 
 // reviews
 
-export const createReviewAction = async () => {
-  return { message: 'create review' }
+export async function createReviewAction(prevState: any, formData: FormData) {
+  const user = await getAuthUser()
+  try {
+    const rawData = Object.fromEntries(formData)
+
+    const validatedFields = validateWithZodSchema(createReviewSchema, rawData)
+    await db.review.create({
+      data: {
+        ...validatedFields,
+        perfilId: user.id,
+      },
+    })
+    revalidatePath(`/properties/${validatedFields.productoId}`)
+    return { message: 'Review submitted successfully' }
+  } catch (error) {
+    return renderError(error)
+  }
 }
 
-export const fetchProductReviews = async () => {
-  return { message: 'fetch reviews' }
+export const fetchProductReviews = async (productoId: string) => {
+  const reviews = await db.review.findMany({
+    where: {
+      productoId,
+    },
+    select: {
+      id: true,
+      rating: true,
+      comment: true,
+      Perfil: {
+        select: {
+          nombre: true,
+          imagenPerfil: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+  return reviews
 }
 
 export const fetchProductReviewsByUser = async () => {

@@ -13,7 +13,7 @@ function SubmitReview({ productoId }: { productoId: string }) {
   return (
     <div className='mt-8'>
       <Button onClick={() => setIsReviewFormVisible((prev) => !prev)}>
-        Leave a Review
+       Dejar un review 
       </Button>
       {isReviewFormVisible && (
         <Card className='p-8 mt-8'>

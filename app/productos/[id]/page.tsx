@@ -12,6 +12,7 @@ import { FaCartPlus } from "react-icons/fa"
 import Image from "next/image"
 import ProductImages from "@/components/myComponents/products/ProductImages"
 import SubmitReview from "@/components/myComponents/review/SubmitReview"
+import ProductReviews from "@/components/myComponents/review/ProductReviews"
 
 const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
@@ -140,8 +141,9 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
       </div>
 
-      <section>
+      <section className="my-10">
         <SubmitReview productoId={producto.id} />
+        <ProductReviews productoId={producto.id} />
       </section>
 
 
@@ -153,6 +155,8 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
         </div>
 
       </section>
+
+
 
 
     </section>
