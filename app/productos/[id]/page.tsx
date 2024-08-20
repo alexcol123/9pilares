@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { FaCartPlus } from "react-icons/fa"
 import Image from "next/image"
 import ProductImages from "@/components/myComponents/products/ProductImages"
+import SubmitReview from "@/components/myComponents/review/SubmitReview"
 
 const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
@@ -139,11 +140,20 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
       </div>
 
-      <div className="w-full  flex  gap-2 items-center justify-center mt-8 mb-20">
-        <Button size={'lg'} className="bg-primary text-white font-semibold  mt-8">Agregar al carrito <FaCartPlus size={18} className="ml-4" />  </Button>
+      <section>
+        <SubmitReview productoId={producto.id} />
+      </section>
 
-        <Button size={'lg'} className="bg-destructive text-white font-semibold  mt-8">Comprar ahora  <FaCartPlus size={18} className="ml-4" />  </Button>
-      </div>
+
+      <section>
+        <div className="w-full  flex  gap-2 items-center justify-center mt-8 mb-20">
+          <Button size={'lg'} className="bg-primary text-white font-semibold  mt-8">Agregar al carrito <FaCartPlus size={18} className="ml-4" />  </Button>
+
+          <Button size={'lg'} className="bg-destructive text-white font-semibold  mt-8">Comprar ahora  <FaCartPlus size={18} className="ml-4" />  </Button>
+        </div>
+
+      </section>
+
 
     </section>
   )

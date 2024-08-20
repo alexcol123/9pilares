@@ -5,7 +5,9 @@ import Logo from './Logo'
 
 function Navbar() {
   return (
-    <nav className='border-b'>
+    <nav className='border-b fixed z-[40]  bg-primary-foreground w-full'
+    
+    >
       <div className='container flex  items-center justify-between   w-full 
 
 

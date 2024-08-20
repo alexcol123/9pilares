@@ -448,3 +448,21 @@ export const fetchUnProducto = async (productoId: string) => {
 
   return producto
 }
+
+// reviews
+
+export const createReviewAction = async () => {
+  return { message: 'create review' }
+}
+
+export const fetchProductReviews = async () => {
+  return { message: 'fetch reviews' }
+}
+
+export const fetchProductReviewsByUser = async () => {
+  return { message: 'fetch user reviews' }
+}
+
+export const deleteReviewAction = async () => {
+  return { message: 'delete  reviews' }
+}
