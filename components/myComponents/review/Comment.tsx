@@ -20,7 +20,7 @@ function Comment({ comment }: { comment: string }) {
           className='pl-0 text-primary'
           onClick={toggleExpanded}
         >
-          {isExpanded ? 'Show Less' : 'Show More'}
+          {isExpanded ? 'Ver Menos' : 'Ver Mas'}
         </Button>
       )}
     </div>

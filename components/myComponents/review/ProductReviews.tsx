@@ -3,19 +3,22 @@ import { fetchProductReviews } from '@/utils/actions'
 import Title from '../products/Title'
 import ReviewCard from './ReviewCard'
 
-async function PropertyReviews({ propertyId }: { propertyId: string }) {
-  const reviews = await fetchProductReviews(propertyId)
+async function PropertyReviews({ productoId }: { productoId: string }) {
+  const reviews = await fetchProductReviews(productoId)
 
   if (reviews.length < 1) return null
 
-  console.log(reviews)
 
- 
+
+
   return (
     <div className='mt-8'>
       <Title text='Reviews' />
       <div className='grid md:grid-cols-2 gap-8 mt-4 '>
         {reviews.map((review) => {
+
+          if (!review.Perfil) return null
+
           const { comment, rating } = review
           const { nombre, imagenPerfil } = review.Perfil
           const reviewInfo = {

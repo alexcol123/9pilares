@@ -13,6 +13,8 @@ import Image from "next/image"
 import ProductImages from "@/components/myComponents/products/ProductImages"
 import SubmitReview from "@/components/myComponents/review/SubmitReview"
 import ProductReviews from "@/components/myComponents/review/ProductReviews"
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 
 const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
@@ -141,14 +143,23 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
       </div>
 
-      <section className="my-10">
+      <section className="my-10 border p-4 rounded-xl space-y-8 ">
         <SubmitReview productoId={producto.id} />
-        <ProductReviews productoId={producto.id} />
+        {/* <div className="max-h-[500px] overflow-x-hidden overflow-y-auto mt-4 bg-muted p-4 rounded-xl">
+          <ProductReviews productoId={producto.id} />
+        </div> */}
+
+        <ScrollArea className="h-80 w-full border overflow-auto p-4  rounded-xl bg-muted">
+  
+            <ProductReviews productoId={producto.id} />
+          
+        </ScrollArea>
+
       </section>
 
 
       <section>
-        <div className="w-full  flex  gap-2 items-center justify-center mt-8 mb-20">
+        <div className="w-full  flex  gap-2 items-center justify-center mt-8 mb-20 ">
           <Button size={'lg'} className="bg-primary text-white font-semibold  mt-8">Agregar al carrito <FaCartPlus size={18} className="ml-4" />  </Button>
 
           <Button size={'lg'} className="bg-destructive text-white font-semibold  mt-8">Comprar ahora  <FaCartPlus size={18} className="ml-4" />  </Button>
@@ -163,3 +174,4 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
   )
 }
 export default SingleProductPage
+
