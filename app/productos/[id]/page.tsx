@@ -1,4 +1,4 @@
-import { fetchUnProducto } from "@/utils/actions"
+import { fetchUnProducto, findExistingReview } from "@/utils/actions"
 import { redirect } from "next/navigation"
 import LoadingCard from "../LoadingCard"
 import BreadCrumbs from "@/components/myComponents/products/BreadCrumbs"
@@ -15,19 +15,23 @@ import SubmitReview from "@/components/myComponents/review/SubmitReview"
 import ProductReviews from "@/components/myComponents/review/ProductReviews"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
+import { auth } from '@clerk/nextjs/server'
 
 const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
+  const { userId } = auth()
 
   const producto = await fetchUnProducto(params.id)
+  const isNotOwner = producto?.perfilId !== userId
 
 
   if (!producto) redirect('/')
 
-  console.log(producto)
 
   const percentageOff = Math.round((producto.precioElevado - producto.precio) / producto.precioElevado * 100)
 
+  const reviewDoesNotExist =
+    userId && isNotOwner && !(await findExistingReview(userId, producto.id))
 
   return (
 
@@ -144,15 +148,13 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
       </div>
 
       <section className="my-10 border p-4 rounded-xl space-y-8 ">
-        <SubmitReview productoId={producto.id} />
-        {/* <div className="max-h-[500px] overflow-x-hidden overflow-y-auto mt-4 bg-muted p-4 rounded-xl">
-          <ProductReviews productoId={producto.id} />
-        </div> */}
+        {reviewDoesNotExist && <SubmitReview productoId={producto.id} />}
 
-        <ScrollArea className="h-80 w-full border overflow-auto p-4  rounded-xl bg-muted">
-  
-            <ProductReviews productoId={producto.id} />
-          
+
+        <ScrollArea className=" max-h-80 w-full border overflow-auto p-4  rounded-xl bg-muted">
+
+          <ProductReviews productoId={producto.id} />
+
         </ScrollArea>
 
       </section>

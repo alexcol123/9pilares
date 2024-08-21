@@ -435,11 +435,13 @@ export const fetchUnProducto = async (productoId: string) => {
       alto: true,
       largo: true,
       ancho: true,
-
+      perfilId:true,
+      
       perfil: {
         select: {
           nombre: true,
           imagenPerfil: true,
+       
         },
       },
 
@@ -531,4 +533,16 @@ export const deleteReviewAction = async (prevState: { reviewId: string }) => {
   } catch (error) {
     return renderError(error)
   }
+}
+
+export const findExistingReview = async (
+  userId: string,
+  productoId: string
+) => {
+  return db.review.findFirst({
+    where: {
+      perfilId: userId,
+      productoId: productoId,
+    },
+  })
 }
