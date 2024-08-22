@@ -546,3 +546,26 @@ export const findExistingReview = async (
     },
   })
 }
+
+export async function fetchProductRating(productId:string) {
+
+  const result = await db.review.groupBy({
+    by: ['productoId'],
+    _avg: {
+      rating: true,
+    },
+    _count: {
+      rating: true,
+    },
+    where: {
+      productoId: productId,
+    },
+
+  })
+
+  return {
+    rating: result[0]?._avg.rating || 0,
+    count: result[0]?._count.rating || 0,
+  }
+  
+}

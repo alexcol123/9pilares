@@ -3,11 +3,24 @@ import { fetchProductReviews } from '@/utils/actions'
 import Title from '../products/Title'
 import ReviewCard from './ReviewCard'
 
-async function PropertyReviews({ productoId }: { productoId: string }) {
-  const reviews = await fetchProductReviews(productoId)
 
-  if (reviews.length < 1) return null
+type ReviewType = {
+  
+    id: string
+    rating: number
+    comment: string
+    Perfil: {
+      nombre: string,
+      imagenPerfil: string
+    } |null
+  
+}
 
+async function PropertyReviews({ reviews }: { reviews: ReviewType[] }) {
+  
+
+  // if (reviews.length < 1) return null
+console.log(reviews)
 
 
 

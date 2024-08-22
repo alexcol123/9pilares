@@ -33,7 +33,7 @@ const ProductCard = ({ producto }: { producto: ProductCardTypes }) => {
           <div className="grid gap-1 w-full">
             <h3 className="font-semibold text-md  capitalize  w-full line-clamp-1">{producto.nombre}</h3>
 
-            <ProductRating />
+            <ProductRating productId={producto.id} />
 
             <p className="text-xs  capitalize  text-secondary-foreground line-clamp-2 ">{producto.tagline}</p>
 

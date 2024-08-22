@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Rating from './Rating'
 import Comment from './Comment'
+import Image from 'next/image'
 
 type ReviewCardProps = {
   reviewInfo: {
@@ -17,10 +18,12 @@ function ReviewCard({ reviewInfo, children }: ReviewCardProps) {
     <Card className='relative'>
       <CardHeader>
         <div className='flex items-center'>
-          <img
+          <Image
             src={reviewInfo.image}
             alt='profile'
             className='w-12 h-12 rounded-full object-cover'
+            width={50}
+            height={50}
           />
           <div className='ml-4'>
             <h3 className='text-sm font-bold capitalize mb-1'>

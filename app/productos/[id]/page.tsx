@@ -16,8 +16,15 @@ import ProductReviews from "@/components/myComponents/review/ProductReviews"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 import { auth } from '@clerk/nextjs/server'
+import ProductReviewContainer from "@/components/myComponents/review/ProductReviewContainer"
+
+import { useCartStore } from "@/utils/store"
+import CartStateTest from "@/components/myComponents/cart/CartStateTest"
+import AddToCartButtons from "@/components/myComponents/cart/AddToCartButtons"
 
 const SingleProductPage = async ({ params }: { params: { id: string } }) => {
+
+
 
   const { userId } = auth()
 
@@ -62,7 +69,7 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
           <h2 className=" opacity-700 font-semibold text-base">{producto.tagline}</h2>
 
 
-          <ProductRating size={20} />
+          <ProductRating size={20} productId={producto.id} />
 
 
           <div className="grid   gap-2 items-center mt-6   ">
@@ -147,25 +154,23 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
       </div>
 
-      <section className="my-10 border p-4 rounded-xl space-y-8 ">
+      <section className="mt-12">
         {reviewDoesNotExist && <SubmitReview productoId={producto.id} />}
+      </section>
 
+      <section>
 
-        <ScrollArea className=" max-h-80 w-full border overflow-auto p-4  rounded-xl bg-muted">
-
-          <ProductReviews productoId={producto.id} />
-
-        </ScrollArea>
+        <ProductReviewContainer productoId={producto.id} />
 
       </section>
 
 
-      <section>
-        <div className="w-full  flex  gap-2 items-center justify-center mt-8 mb-20 ">
-          <Button size={'lg'} className="bg-primary text-white font-semibold  mt-8">Agregar al carrito <FaCartPlus size={18} className="ml-4" />  </Button>
 
-          <Button size={'lg'} className="bg-destructive text-white font-semibold  mt-8">Comprar ahora  <FaCartPlus size={18} className="ml-4" />  </Button>
-        </div>
+
+
+      <section>
+      <CartStateTest />
+        < AddToCartButtons  producto={producto} />
 
       </section>
 
