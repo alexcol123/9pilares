@@ -18,9 +18,9 @@ const CartIcon = () => {
         variant='link'
         className='p-2 cursor-pointer relative  group-hover:bg-primary transition duration-500 '
         onClick={() => {
-           router.push('/carrito')
+          router.push('/carrito')
         }}
-      
+
       >
         <BsCartFill size={20} className='text-white' />
 

@@ -40,15 +40,8 @@ const initialState: State = {
 
 }
 const taxRate = 1.1 // 10% tax
-// const getSubTotal = (productos: ProductoType[]) => productos.reduce((acc, producto) => acc + producto.precio * producto.cantidadParaComprar, 0)
-// const getTotal = (productos: ProductoType[]) => getSubTotal(productos) * taxRate
-// const getcantidadArticulos = (productos: ProductoType[]) => productos.reduce((acc, producto) => acc + producto.cantidadParaComprar, 0)
+
 const getIsProductOnCart = (productos: ProductoType[], id: number) => productos.find((p) => p.id === id)
-
-
-
-
-
 
 const calculateTotals = (productos: ProductoType[]) => {
   const subTotal = productos.reduce((acc, producto) => acc + producto.precio * producto.cantidadParaComprar, 0);
@@ -103,8 +96,8 @@ export const useCartStore = create(persist<State & Actions>((set) => ({
     let todosLosProductos
     if (!isProductOnCart) return state
 
-  if (isProductOnCart.cantidadParaComprar > 1) {
-       todosLosProductos = state.listaDeProductos.map((p) => {
+    if (isProductOnCart.cantidadParaComprar > 1) {
+      todosLosProductos = state.listaDeProductos.map((p) => {
         if (p.id === id) {
           return {
             ...p,
@@ -118,12 +111,11 @@ export const useCartStore = create(persist<State & Actions>((set) => ({
 
       return { listaDeProductos: todosLosProductos, subTotal, total, cantidadArticulos };
 
-
-    } else {  
-       todosLosProductos = state.listaDeProductos.filter((p) => p.id !== id)
+    } else {
+      todosLosProductos = state.listaDeProductos.filter((p) => p.id !== id)
     }
 
-  
+
     const { subTotal, total, cantidadArticulos } = calculateTotals(todosLosProductos);
 
     return { listaDeProductos: todosLosProductos, subTotal, total, cantidadArticulos };

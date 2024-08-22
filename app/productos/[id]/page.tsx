@@ -20,7 +20,7 @@ import ProductReviewContainer from "@/components/myComponents/review/ProductRevi
 
 import { useCartStore } from "@/utils/store"
 import CartStateTest from "@/components/myComponents/cart/CartStateTest"
-import AddToCartButtons from "@/components/myComponents/cart/AddToCartButtons"
+import { AddToCartBtn, MasUnoBtn, MenosUnoBtn, RemoveOneProduct, RemoverTodosProductosBtn } from "@/components/myComponents/cart/CartButtons"
 
 const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
@@ -169,8 +169,16 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
 
       <section>
-      <CartStateTest />
-        < AddToCartButtons  producto={producto} />
+        <CartStateTest />
+
+        <div className="flex justify-around ">
+          <AddToCartBtn producto={producto} />
+          <RemoveOneProduct producto={producto} />
+          <RemoverTodosProductosBtn />
+          <MenosUnoBtn producto={producto} />
+          <MasUnoBtn producto={producto} />
+        </div>
+        {/* < CartButtons producto={producto} /> */}
 
       </section>
 
