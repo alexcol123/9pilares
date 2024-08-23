@@ -6,6 +6,7 @@ import { useCartStore } from "@/utils/store"
 import { FaCartPlus } from "react-icons/fa"
 
 import { toast } from "@/components/ui/use-toast"
+import { BsCartX } from "react-icons/bs"
 
 
 
@@ -36,13 +37,17 @@ export const RemoveOneProduct = ({ producto }: { producto: any }) => {
   const removerProducto = useCartStore((state) => state.removerProducto)
   return (
     <Button
+      variant={'link'}
       onClick={() => [removerProducto(producto.id),
       toast({
         title: 'Producto eliminado del carrito:',
         description: producto.nombre
       })
       ]}
-      size={'lg'} className="bg-destructive text-white font-semibold  mt-8">remover Producto <FaCartPlus size={18} className="ml-4" />  </Button>
+      className="p-0 opacity-50 text-secondary-foreground  "
+      size={'sm'}
+
+    >Remover  </Button>
   )
 }
 
@@ -51,12 +56,15 @@ export const RemoverTodosProductosBtn = () => {
   const removerTodosProductos = useCartStore((state) => state.limpiarCarrito)
 
   return <Button
+    className="hover:bg-destructive hover:text-white transition duration-300 "
+    variant={'outline'}
+    size={'sm'}
     onClick={() => [removerTodosProductos(), toast({
       title: 'Carrito eliminado',
       description: 'Todos los productos han sido eliminados del carrito'
     })
     ]}
-    size={'lg'} className="bg-destructive text-white font-semibold  mt-8">remover todo <FaCartPlus size={18} className="ml-4" />  </Button>
+  >Vaciar el carrito <BsCartX className=" ml-4  " size={16} /> </Button>
 
 }
 
@@ -66,24 +74,27 @@ export const MenosUnoBtn = ({ producto }: { producto: any }) => {
 
 
   return <Button
+    variant={'outline'}
     onClick={() => [removerUnoDelProducto(producto.id), toast({
       title: 'Cantidad -1:',
       description: producto.nombre
+
     })
     ]}
-    size={'lg'} className="bg-green-500 text-white font-semibold  mt-8"> -  </Button>
+    size={'sm'} className="font-semibold  "> -  </Button>
 }
 
 export const MasUnoBtn = ({ producto }: { producto: any }) => {
   const agregarUnoDelProducto = useCartStore((state) => state.agregarUnoDelProducto)
 
   return <Button
+    variant={'outline'}
     onClick={() => [agregarUnoDelProducto(producto.id), toast({
       title: 'Cantidad +1:',
       description: producto.nombre
     })
     ]}
-    size={'lg'} className="bg-green-500 text-white font-semibold  mt-8"> + </Button>
+    size={'sm'} className="font-semibold "> + </Button>
 }
 
 

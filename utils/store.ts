@@ -6,6 +6,7 @@ import { create } from 'zustand'
 import { persist } from "zustand/middleware"
 
 type ProductoType = {
+  imagenes: any
   id: number
   nombre: string
   precio: number
