@@ -9,9 +9,13 @@ import { toast } from "@/components/ui/use-toast"
 import { BsCartX } from "react-icons/bs"
 
 
+// type sizeTypes{
+//   'sm' | 'md' | 'lg'  
+// }
 
+type sizeProps = 'sm' | 'lg'
 
-export const AddToCartBtn = ({ producto }: { producto: any }) => {
+export const AddToCartBtn = ({ producto, btnSize }: { producto: any, btnSize?: sizeProps }) => {
 
   producto.cantidadParaComprar = 1
 
@@ -21,6 +25,7 @@ export const AddToCartBtn = ({ producto }: { producto: any }) => {
   return (
     <Button
       type="button"
+      size={btnSize || 'lg'}
       onClick={() =>
         [
           agregarProducto(producto),
@@ -28,9 +33,11 @@ export const AddToCartBtn = ({ producto }: { producto: any }) => {
             title: 'Producto agregado al carrito:',
             description: producto.nombre
           })
-
         ]}
-      size={'lg'} className="bg-primary text-white font-semibold  mt-8">Agregar al carrito <FaCartPlus size={18} className="ml-4" />  </Button>
+
+      className="bg-primary text-white font-semibold  ">
+      Agregar al carrito <FaCartPlus size={18} className="ml-4" />
+    </Button>
   )
 }
 

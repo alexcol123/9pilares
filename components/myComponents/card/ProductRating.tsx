@@ -16,7 +16,7 @@ async function ProductRating(
 
   // let count = 10
   // const rating = 3.5
-  let ratingPlaceholder = rating
+  let ratingPlaceholder = rating || 5
 
 
 
@@ -52,17 +52,15 @@ async function ProductRating(
   </div>
 
   return (
-    <div >
-      {count > 0
-        ? <div className="flex items-center ">
-          <div> {starsRatingDiv}</div>
-          <div> {count && <span className="text-sm  ml-1">({count}) reviews</span>} </div>
 
-        </div>
-        : <div className="text-transparent">Not rated</div>
-      }
+
+    <div className="flex items-center ">
+      <div> {starsRatingDiv}</div>
+      <div> { <span className="text-sm  ml-1">({count || 0}) reviews</span>} </div>
 
     </div>
+
+
   )
 
 }
