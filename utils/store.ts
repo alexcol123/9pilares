@@ -69,7 +69,7 @@ export const useCartStore = create(persist<State & Actions>((set) => ({
         if (p.id === producto.id) {
           return {
             ...p,
-            cantidadParaComprar: p.cantidadParaComprar + producto.cantidadParaComprar,
+            cantidadParaComprar: p.cantidadParaComprar += producto.cantidadParaComprar,
           }
         }
         return p

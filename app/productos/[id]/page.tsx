@@ -1,6 +1,6 @@
 import { fetchUnProducto, findExistingReview } from "@/utils/actions"
 import { redirect } from "next/navigation"
-import LoadingCard from "../LoadingCard"
+
 import BreadCrumbs from "@/components/myComponents/products/BreadCrumbs"
 import ShareButton from "@/components/myComponents/products/ShareButton"
 import FavoriteToggleButton from "@/components/myComponents/card/FavoriteToggleButton"
@@ -12,15 +12,13 @@ import { FaCartPlus } from "react-icons/fa"
 import Image from "next/image"
 import ProductImages from "@/components/myComponents/products/ProductImages"
 import SubmitReview from "@/components/myComponents/review/SubmitReview"
-import ProductReviews from "@/components/myComponents/review/ProductReviews"
-import { ScrollArea } from "@/components/ui/scroll-area"
+
 
 import { auth } from '@clerk/nextjs/server'
 import ProductReviewContainer from "@/components/myComponents/review/ProductReviewContainer"
 
-import { useCartStore } from "@/utils/store"
 import CartStateTest from "@/components/myComponents/cart/CartStateTest"
-import { AddToCartBtn, MasUnoBtn, MenosUnoBtn, RemoveOneProduct, RemoverTodosProductosBtn } from "@/components/myComponents/cart/CartButtons"
+import { AddToCartBtn } from "@/components/myComponents/cart/CartButtons"
 
 const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
@@ -83,7 +81,7 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
 
           <div>
-            <Button size={'default'} className="bg-primary text-white font-semibold  mt-8  ">Agregar al carrito <FaCartPlus size={18} className="ml-4" />  </Button>
+          <AddToCartBtn producto={producto} />
           </div>
 
         </div>
@@ -173,10 +171,10 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
 
         <div className="flex justify-around ">
           <AddToCartBtn producto={producto} />
-          <RemoveOneProduct producto={producto} />
+          {/* <RemoveOneProduct producto={producto} />
           <RemoverTodosProductosBtn />
           <MenosUnoBtn producto={producto} />
-          <MasUnoBtn producto={producto} />
+          <MasUnoBtn producto={producto} /> */}
         </div>
         {/* < CartButtons producto={producto} /> */}
 

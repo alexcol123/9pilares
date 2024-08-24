@@ -52,13 +52,14 @@ async function ProductRating(
   </div>
 
   return (
-    <div className="flex items-center gap-2">
+    <div >
       {count > 0
-        ? <>
-          <>   {starsRatingDiv}</>
-          <>  <>     {count && <span className="text-sm  ml-1">({count}) reviews</span>}</></>
-        </>
-        : null
+        ? <div className="flex items-center ">
+          <div> {starsRatingDiv}</div>
+          <div> {count && <span className="text-sm  ml-1">({count}) reviews</span>} </div>
+
+        </div>
+        : <div className="text-transparent">Not rated</div>
       }
 
     </div>

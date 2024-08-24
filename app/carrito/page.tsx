@@ -18,26 +18,34 @@ import Link from "next/link"
 import { MasUnoBtn, MenosUnoBtn, RemoveOneProduct, RemoverTodosProductosBtn } from "@/components/myComponents/cart/CartButtons"
 import Title from "@/components/myComponents/products/Title"
 import ListaVacia from "@/components/myComponents/home/ListaVacia"
+import { Button } from "@/components/ui/button"
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
 
 
 const PaginaCarrito = () => {
   const { listaDeProductos, subTotal, total, cantidadArticulos, } = useCartStore(state => state)
 
-const carritoVacio = listaDeProductos.length === 0
+  const carritoVacio = listaDeProductos.length === 0
+
+  if (carritoVacio) return <div className="pt-40">
+    <ListaVacia
+      encabezado="Carrito Vacio."
+      mensaje="No hay productos en tu carrito haz click en el boton para volver a la pagina de productos."
+      textoBoton="Ver Productos."
+    />
+  </div>
 
 
-if(carritoVacio) return <div className="pt-40">
-  <ListaVacia  
-  encabezado="Carrito Vacio."
-  mensaje="No hay productos en tu carrito haz click en el boton para volver a la pagina de productos."
-  textoBoton="volver atras."  
-/>
 
-</div>
+  if (!subTotal) return <div className="text-center mt-20"> Loading</div>
+
 
   return (
     <div>
-      <h2 className="font-semibold text-center text-3xl pt-10 mb-20">Carrito de compras</h2>
+      <div className="text-center mb-20">
+        <h2 className=" text-center text-3xl pt-10 mb-4  ">Carrito de compras</h2>
+        <p className="">Productos en Carrito: <span className="text-primary font-semibold">{cantidadArticulos}</span></p>
+      </div>
 
       <Table>
         <TableCaption>Lista de productos.</TableCaption>
@@ -101,6 +109,22 @@ if(carritoVacio) return <div className="pt-40">
           </TableRow>
         </TableFooter>
       </Table>
+
+      <div className="flex  flex-col gap-6 w-fit ml-auto">
+        <Button asChild className="mr-5  px-20" size={'lg'} >
+
+          <Link href="/checkout">
+            Hacer Pago
+          </Link>
+        </Button>
+
+        <Button asChild size={'sm'} variant={'link'} className="text-secondary-foreground opacity-50" >
+          <Link href="/">
+            <MdOutlineKeyboardBackspace className="ml-3  text-left" />
+            Seguir comprando
+          </Link>
+        </Button>
+      </div>
 
     </div>
   )

@@ -20,6 +20,7 @@ export const AddToCartBtn = ({ producto }: { producto: any }) => {
 
   return (
     <Button
+      type="button"
       onClick={() =>
         [
           agregarProducto(producto),
@@ -37,6 +38,7 @@ export const RemoveOneProduct = ({ producto }: { producto: any }) => {
   const removerProducto = useCartStore((state) => state.removerProducto)
   return (
     <Button
+      type="button"
       variant={'link'}
       onClick={() => [removerProducto(producto.id),
       toast({
@@ -56,6 +58,7 @@ export const RemoverTodosProductosBtn = () => {
   const removerTodosProductos = useCartStore((state) => state.limpiarCarrito)
 
   return <Button
+    type="button"
     className="hover:bg-destructive hover:text-white transition duration-300 "
     variant={'outline'}
     size={'sm'}
@@ -74,6 +77,7 @@ export const MenosUnoBtn = ({ producto }: { producto: any }) => {
 
 
   return <Button
+    type="button"
     variant={'outline'}
     onClick={() => [removerUnoDelProducto(producto.id), toast({
       title: 'Cantidad -1:',
@@ -88,6 +92,7 @@ export const MasUnoBtn = ({ producto }: { producto: any }) => {
   const agregarUnoDelProducto = useCartStore((state) => state.agregarUnoDelProducto)
 
   return <Button
+    type="button"
     variant={'outline'}
     onClick={() => [agregarUnoDelProducto(producto.id), toast({
       title: 'Cantidad +1:',
