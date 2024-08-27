@@ -305,7 +305,7 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
         outOfStock: true,
 
 
-        perfil: {
+        Perfil: {
           select: {
             nombre: true,
             imagenPerfil: true,
@@ -399,7 +399,7 @@ export const fetchFavorites = async () => {
           outOfStock: true,
 
 
-          perfil: {
+          Perfil: {
             select: {
               nombre: true,
               imagenPerfil: true,
@@ -440,7 +440,7 @@ export const fetchUnProducto = async (productoId: string) => {
       ancho: true,
       perfilId: true,
 
-      perfil: {
+      Perfil: {
         select: {
           nombre: true,
           imagenPerfil: true,
@@ -639,7 +639,7 @@ export const crearOrdenAction = async (prevState: {
       amount: subtotal,
       perfilId: user.id,
       products: JSON.stringify(listaDeProductos),
- 
+
     }
 
     await db.orden.create({
@@ -648,28 +648,46 @@ export const crearOrdenAction = async (prevState: {
 
 
 
-    return { message: 'Orden creada exitosamente' }
   } catch (error) {
     return renderError(error)
 
   }
+
+  redirect('/ordenes')
 }
 
 
-// id String @id @default(uuid())
+export const fetchOrdenes = async () => {
+  const user = await getAuthUser()
 
-// amount          Float
-// deliveryStatus  DeliveryStatusEnum @default(pending)
-// createdDate     DateTime           @default(now())
-// paymentIntentId String             @unique
-// paymentStatus   Boolean            @default(false)
-// products        CartProduct[]
-// address         Address            @relation(fields: [addressId], references: [id])
-
-// Perfil    Perfil?    @relation(fields: [perfilId], references: [id])
-// perfilId  String?
-// addressId String
-// Producto  Producto[]
+  const misOrdenes = await db.orden.findMany({
+    where: {
+      perfilId: user.id,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+  return misOrdenes
+}
 
 
-[{"id":"f3ed4612-9db9-40a8-a181-cade0b83368f","nombre":"One Piece Monkey D Luffy ","tagline":"Añade poder a tu colección con esta impresionante figura de Luffy","descripcion":"En nuestra tienda encontrarás figuras de One Piece, Dragon Ball y Demon Slayer y mas, fabricadas con excelente calidad y gran atención al detalle. Cada figura captura perfectamente la esencia de tus personajes favoritos, desde sus expresiones hasta sus icónicos trajes. Ideales para coleccionistas y fans, estas figuras son perfectas para exhibir en tu estantería, escritorio o vitrina. Añade a tus héroes de anime a tu colección y revive sus épicas aventuras todos los días.","precio":15,"precioElevado":22,"categoria":"one piece","imagenes":["https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498096-Sbbdd92a30c1b4418811510979899cfecB.webp","https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498097-Sbaf67f6f2c86442f8225eb7e82348105U.webp","https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498097-Se4df5add247a48f2a44e564f1fbee0bei.webp","https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498097-S8c27774e2f8146499c9a6a43b61928071.webp","https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498097-S81a014df1fbb484c9f3da5c0d565f18b6.webp"],"cantidad":3,"onSale":true,"outOfStock":false,"perfil":{"nombre":"Henry","imagenPerfil":"https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723828383401-S28c175aa34df4e589dace08855105201t.webp"},"cantidadParaComprar":1,"precioReal":15}]
+export const deleteBookingAction = async (prevState: { orderId: string }) => {
+  const { orderId } = prevState
+  const user = await getAuthUser()
+
+  try {
+    await db.orden.delete({
+      where: {
+        id: orderId,
+        perfilId: user.id,
+      },
+    })
+
+    revalidatePath('/ordenes')
+    return { message: 'Orden eliminada exitosamente ' }
+  } catch (error) {
+    return renderError(error)
+  }
+}
+

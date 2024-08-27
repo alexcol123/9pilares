@@ -70,11 +70,14 @@ model Producto {
 
   precioPagado Int
 
-  perfil   Perfil? @relation(fields: [perfilId], references: [clerkId], onDelete: Cascade)
-  perfilId String?
-
   favoritos Favorito[]
   reviews   Review[]
+
+  Perfil    Perfil    @relation(fields: [perfilId], references: [clerkId],  onDelete: Cascade)
+  perfilId  String
+
+
+
 }
 
 model Favorito {
@@ -107,16 +110,13 @@ model Orden {
 
   amount         Float
   deliveryStatus DeliveryStatusEnum @default(pending)
-  createdDate    DateTime           @default(now())
 
   paymentStatus Boolean @default(false)
   products      String
 
-  // Perfil        Perfil? @relation(fields: [perfilId], references: [id])
-  // perfilId      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  // Address    Address?  @relation(fields: [addressId], references: [id])
-  // addressId  String?
   Perfil   Perfil @relation(fields: [perfilId], references: [clerkId], onDelete: Cascade)
   perfilId String
 }

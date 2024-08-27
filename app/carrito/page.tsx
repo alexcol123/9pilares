@@ -20,6 +20,7 @@ import Title from "@/components/myComponents/products/Title"
 import ListaVacia from "@/components/myComponents/home/ListaVacia"
 import { Button } from "@/components/ui/button"
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import CheckOutClient from "./checkout"
 
 
 const PaginaCarrito = () => {
@@ -111,12 +112,7 @@ const PaginaCarrito = () => {
       </Table>
 
       <div className="flex  flex-col gap-6 w-fit ml-auto">
-        <Button asChild className="mr-5  px-20" size={'lg'} >
-
-          <Link href="/checkout">
-            Hacer Pago
-          </Link>
-        </Button>
+        <CheckOutClient />
 
         <Button asChild size={'sm'} variant={'link'} className="text-secondary-foreground opacity-50" >
           <Link href="/">
@@ -124,6 +120,8 @@ const PaginaCarrito = () => {
             Seguir comprando
           </Link>
         </Button>
+
+
       </div>
 
     </div>
