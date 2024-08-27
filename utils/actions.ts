@@ -7,6 +7,9 @@ import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { uploadImage } from './supabase'
+import { arrayOutputType } from 'zod'
+import { raw } from '@prisma/client/runtime/library'
+import { list } from 'postcss'
 
 // local functions 
 const getAuthUser = async () => {
@@ -435,13 +438,13 @@ export const fetchUnProducto = async (productoId: string) => {
       alto: true,
       largo: true,
       ancho: true,
-      perfilId:true,
-      
+      perfilId: true,
+
       perfil: {
         select: {
           nombre: true,
           imagenPerfil: true,
-       
+
         },
       },
 
@@ -547,7 +550,7 @@ export const findExistingReview = async (
   })
 }
 
-export async function fetchProductRating(productId:string) {
+export async function fetchProductRating(productId: string) {
 
   const result = await db.review.groupBy({
     by: ['productoId'],
@@ -567,5 +570,106 @@ export async function fetchProductRating(productId:string) {
     rating: result[0]?._avg.rating || 0,
     count: result[0]?._count.rating || 0,
   }
-  
+
 }
+
+
+
+
+export const crearOrdenAction = async (prevState: {
+  listaDeProductos: any[]
+}) => {
+  const user = await getAuthUser()
+
+  const { listaDeProductos } = prevState
+
+
+
+  try {
+
+    const productosSiendoComprados = await db.producto.findMany({
+      where: {
+        id: {
+          in: listaDeProductos.map((producto) => producto.id,)
+        },
+        // return only products that are in stock
+
+      },
+      select: {
+        id: true,
+        precio: true,
+        cantidad: true,
+      },
+
+    }
+
+    )
+
+    // to lista de productos overite the price, with  productosSiendoComprados
+    listaDeProductos.forEach((producto) => {
+
+      const productoSiendoComprado = productosSiendoComprados.find(
+        (p) => p.id === producto.id
+      )
+
+      if (!productoSiendoComprado) {
+        throw new Error('Producto no encontrado')
+      }
+
+      return producto.precioReal = productoSiendoComprado.precio
+    })
+
+
+
+    let subtotal = listaDeProductos.reduce(
+      (acc, producto) => acc + (producto.precioReal * producto.cantidadParaComprar),
+      0
+    )
+
+    // shiping cost // add if subtotal is under 50 add 10 shipping cost
+
+    subtotal = subtotal > 50 ? subtotal : subtotal + 10
+
+    const ordenData: {
+      amount: number,
+      perfilId: string,
+      products: string,
+
+    } = {
+      amount: subtotal,
+      perfilId: user.id,
+      products: JSON.stringify(listaDeProductos),
+ 
+    }
+
+    await db.orden.create({
+      data: ordenData
+    })
+
+
+
+    return { message: 'Orden creada exitosamente' }
+  } catch (error) {
+    return renderError(error)
+
+  }
+}
+
+
+// id String @id @default(uuid())
+
+// amount          Float
+// deliveryStatus  DeliveryStatusEnum @default(pending)
+// createdDate     DateTime           @default(now())
+// paymentIntentId String             @unique
+// paymentStatus   Boolean            @default(false)
+// products        CartProduct[]
+// address         Address            @relation(fields: [addressId], references: [id])
+
+// Perfil    Perfil?    @relation(fields: [perfilId], references: [id])
+// perfilId  String?
+// addressId String
+// Producto  Producto[]
+
+
+[{"id":"f3ed4612-9db9-40a8-a181-cade0b83368f","nombre":"One Piece Monkey D Luffy ","tagline":"Añade poder a tu colección con esta impresionante figura de Luffy","descripcion":"En nuestra tienda encontrarás figuras de One Piece, Dragon Ball y Demon Slayer y mas, fabricadas con excelente calidad y gran atención al detalle. Cada figura captura perfectamente la esencia de tus personajes favoritos, desde sus expresiones hasta sus icónicos trajes. Ideales para coleccionistas y fans, estas figuras son perfectas para exhibir en tu estantería, escritorio o vitrina. Añade a tus héroes de anime a tu colección y revive sus épicas aventuras todos los días.","precio":15,"precioElevado":22,"categoria":"one piece","imagenes":["https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498096-Sbbdd92a30c1b4418811510979899cfecB.webp","https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498097-Sbaf67f6f2c86442f8225eb7e82348105U.webp","https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498097-Se4df5add247a48f2a44e564f1fbee0bei.webp","https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498097-S8c27774e2f8146499c9a6a43b61928071.webp","https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723312498097-S81a014df1fbb484c9f3da5c0d565f18b6.webp"],"cantidad":3,"onSale":true,"outOfStock":false,"perfil":{"nombre":"Henry","imagenPerfil":"https://muzktffclydvmgtjbsqe.supabase.co/storage/v1/object/public/9pilares/1723828383401-S28c175aa34df4e589dace08855105201t.webp"},"cantidadParaComprar":1,"precioReal":15}]

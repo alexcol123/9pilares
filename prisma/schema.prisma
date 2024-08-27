@@ -41,8 +41,7 @@ model Perfil {
   productos Producto[]
   favoritos Favorito[]
   reviews   Review[]
-  pedidos   Orden[]
-  Address   Address[]
+  ordenes   Orden[]
 }
 
 model Producto {
@@ -76,8 +75,6 @@ model Producto {
 
   favoritos Favorito[]
   reviews   Review[]
-  Orden     Orden?     @relation(fields: [ordenId], references: [id])
-  ordenId   String?
 }
 
 model Favorito {
@@ -108,51 +105,38 @@ model Review {
 model Orden {
   id String @id @default(uuid())
 
-  amount          Float
-  currency        String
-  status          String
-  deliveryStatus  DeliveryStatusEnum @default(pending)
-  createdDate     DateTime           @default(now())
-  paymentIntentId String             @unique
-  paymentStatus   Boolean            @default(false)
-  products        CartProduct[]
-  address         Address            @relation(fields: [addressId], references: [id])
+  amount         Float
+  deliveryStatus DeliveryStatusEnum @default(pending)
+  createdDate    DateTime           @default(now())
 
-  Perfil    Perfil?    @relation(fields: [perfilId], references: [id])
-  perfilId  String?
-  addressId String
-  Producto  Producto[]
+  paymentStatus Boolean @default(false)
+  products      String
+
+  // Perfil        Perfil? @relation(fields: [perfilId], references: [id])
+  // perfilId      String?
+
+  // Address    Address?  @relation(fields: [addressId], references: [id])
+  // addressId  String?
+  Perfil   Perfil @relation(fields: [perfilId], references: [clerkId], onDelete: Cascade)
+  perfilId String
 }
 
-model Address {
-  id String @id @default(uuid())
+// model Address {
+//   id String @id @default(uuid())
 
-  streetAddress String
-  city          String
-  state         String
-  zipCode       String
-  country       String
-  phone         String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+//   streetAddress String
+//   city          String
+//   state         String
+//   zipCode       String
+//   country       String
+//   phone         String
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
 
-  Perfil   Perfil? @relation(fields: [perfilId], references: [clerkId], onDelete: Cascade)
-  perfilId String?
-  Orden    Orden[]
-}
-
-model CartProduct {
-  id          String  @id @default(uuid())
-  name        String
-  description String
-  category    String
-  selectedImg String
-  quantity    Int
-  price       Float
-  size        String
-  Orden       Orden?  @relation(fields: [ordenId], references: [id])
-  ordenId     String?
-}
+//   Perfil   Perfil? @relation(fields: [perfilId], references: [clerkId], onDelete: Cascade)
+//   perfilId String?
+//   Orden    Orden[]
+// }
 
 enum DeliveryStatusEnum {
   pending

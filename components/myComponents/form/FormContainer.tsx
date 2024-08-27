@@ -18,17 +18,15 @@ function FormContainer({
 }) {
   const [state, formAction] = useFormState(action, initialState)
 
-
+ 
   const { toast } = useToast()
 
   useEffect(() => {
     if (state.message) {
       toast({ description: state.message })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state])
+  }, [state, toast])
 
-
-  return <form action={formAction} >{children}</form>
+  return <form action={formAction}>{children}</form>
 }
 export default FormContainer
