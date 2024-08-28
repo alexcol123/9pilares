@@ -653,7 +653,7 @@ export const crearOrdenAction = async (prevState: {
 
   }
 
-  redirect('/ordenes')
+  redirect('/mis-compras')
 }
 
 
@@ -672,19 +672,19 @@ export const fetchOrdenes = async () => {
 }
 
 
-export const deleteBookingAction = async (prevState: { orderId: string }) => {
-  const { orderId } = prevState
+export const borrarOrdenAction = async (prevState: { ordenId: string }) => {
+  const { ordenId } = prevState
   const user = await getAuthUser()
 
   try {
     await db.orden.delete({
       where: {
-        id: orderId,
+        id: ordenId,
         perfilId: user.id,
       },
     })
 
-    revalidatePath('/ordenes')
+    revalidatePath('/mis-compras')
     return { message: 'Orden eliminada exitosamente ' }
   } catch (error) {
     return renderError(error)
