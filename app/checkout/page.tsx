@@ -1,51 +1,40 @@
 'use client'
 
-import { SubmitButton } from "@/components/myComponents/form/Buttons"
-import FormContainer from "@/components/myComponents/form/FormContainer"
-import { Button } from "@/components/ui/button"
-import { crearOrdenAction } from "@/utils/actions"
+import axios from 'axios'
+import { useSearchParams } from 'next/navigation'
+import React, { useCallback } from 'react'
+import { loadStripe } from '@stripe/stripe-js'
+import {
+  EmbeddedCheckoutProvider,
+  EmbeddedCheckout,
+} from '@stripe/react-stripe-js'
 
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+)
 
-import { useCartStore } from "@/utils/store"
-import { useAuth, SignInButton } from "@clerk/nextjs"
+const CheckOutPage = () => {
 
+  const searchParams = useSearchParams()
+  const ordenId = searchParams.get('ordenId')
 
-const CheckoutPage = () => {
-  const { userId } = useAuth()
+  const fetchClientSecret = useCallback(async () => {
+    // Create a Checkout Session
+    const response = await axios.post('/api/payment', {
+      ordenId: ordenId,
+    })
+    return response.data.clientSecret
+  }, [ordenId])
 
-  const listaDeProductos = useCartStore(state => state.listaDeProductos)
-
-
-  const crearOrder = crearOrdenAction.bind(null, {
-    listaDeProductos
-  })
-
-
-
-  if (!userId) {
-    return (
-      <div className="flex  items-center justify-center mt-80 w-full ">
-        <div className="flex flex-col items-center justify-center w-fit rounded-xl bg-muted border  p-10 ">
-          <h2 className="text-xl mb-10  ">Registrate para continuar 😉</h2>
-          <SignInButton mode="modal">
-            <Button>
-              Registrate para continuar
-            </Button>
-          </SignInButton>
-        </div>
-      </div>
-    )
-  }
-
-
+  const options = { fetchClientSecret }
 
 
   return (
-    <section>
-      <FormContainer action={crearOrder}>
-        <SubmitButton text="Hacer Pago" className="w-full" />
-      </FormContainer>
-    </section>
+    <div id='checkout'>
+      <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
+        <EmbeddedCheckout />
+      </EmbeddedCheckoutProvider>
+    </div>
   )
 }
-export default CheckoutPage
+export default CheckOutPage

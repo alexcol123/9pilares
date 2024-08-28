@@ -58,6 +58,9 @@ export type productolist = {
 
 async function MisComprasPagina() {
   const misOrdenes = await fetchOrdenes()
+
+  console.log(misOrdenes)
+
   if (misOrdenes.length === 0) {
     return < ListaVacia encabezado='No hay ordenes aun .' mensaje='Continúa explorando nuestras otros productos.' textoBoton='volver a inicio' />
 
@@ -74,6 +77,8 @@ async function MisComprasPagina() {
         <TableRow>
           <TableHead>Fecha Creada</TableHead>
           <TableHead>Orden Id</TableHead>
+
+          <TableHead>Pago</TableHead>
           <TableHead>Total Pagado</TableHead>
           <TableHead>Estatus Envio</TableHead>
           <TableHead>Productos Ordenados</TableHead>
@@ -87,7 +92,7 @@ async function MisComprasPagina() {
 
 
 
-          const { id, amount, deliveryStatus, products, createdAt, perfilId } = orden
+          const { id, amount, deliveryStatus, products, createdAt, perfilId, paymentStatus } = orden
 
           const listaDeProductos = JSON.parse(products)
 
@@ -99,6 +104,7 @@ async function MisComprasPagina() {
 
               <TableCell className="">{creada}</TableCell>
               <TableCell>{id}</TableCell>
+              <TableCell>{paymentStatus ? <div className="text-green-500 font-semibold"> Completado </div> :  <div className="text-primary font-semibold"> Procesando </div> }</TableCell>
               <TableCell>{formatCurrency(amount)}</TableCell>
               <TableCell>{deliveryStatus}</TableCell>
               <TableCell>

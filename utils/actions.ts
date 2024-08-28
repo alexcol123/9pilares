@@ -580,12 +580,13 @@ export const crearOrdenAction = async (prevState: {
   listaDeProductos: any[]
 }) => {
   const user = await getAuthUser()
-
   const { listaDeProductos } = prevState
 
 
-
+  let ordenId: null | string = null
   try {
+
+
 
     const productosSiendoComprados = await db.producto.findMany({
       where: {
@@ -642,10 +643,12 @@ export const crearOrdenAction = async (prevState: {
 
     }
 
-    await db.orden.create({
+
+    const orden = await db.orden.create({
       data: ordenData
     })
 
+    ordenId = orden.id
 
 
   } catch (error) {
@@ -653,7 +656,7 @@ export const crearOrdenAction = async (prevState: {
 
   }
 
-  redirect('/mis-compras')
+  redirect(`/checkout?ordenId=${ordenId}`)
 }
 
 
