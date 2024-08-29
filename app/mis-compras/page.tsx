@@ -1,6 +1,4 @@
-// import EmptyList from '@/components/home/EmptyList'
-// // import CountryFlagAndName from '@/components/card/CountryFlagAndName'
-// import Link from 'next/link'
+
 
 import ListaVacia from "@/components/myComponents/home/ListaVacia"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -8,28 +6,10 @@ import { borrarOrdenAction, fetchOrdenes } from "@/utils/actions"
 import { formatCurrency, formatDate } from "@/utils/format"
 
 import { OrderDialog } from "./orderDialog"
-
-import { Button } from "@/components/ui/button"
-import { FaTrashAlt } from "react-icons/fa";
 import { IconButton } from "@/components/myComponents/form/Buttons"
 import FormContainer from "@/components/myComponents/form/FormContainer"
 
 
-// import { formatDate, formatCurrency } from '@/utils/format'
-// import {
-//   Table,
-//   TableBody,
-//   TableCaption,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from '@/components/ui/table'
-
-// import FormContainer from '@/components/form/FormContainer'
-// import { IconButton } from '@/components/form/Buttons'
-// import { fetchBookings, deleteBookingAction } from '@/utils/actions'
-// import LoadingTable from '@/components/booking/LoadingTable'
 
 export type productolist = {
   id: string,
@@ -59,17 +39,16 @@ export type productolist = {
 async function MisComprasPagina() {
   const misOrdenes = await fetchOrdenes()
 
-  console.log(misOrdenes)
+  // console.log(misOrdenes)
 
   if (misOrdenes.length === 0) {
     return < ListaVacia encabezado='No hay ordenes aun .' mensaje='Continúa explorando nuestras otros productos.' textoBoton='volver a inicio' />
 
   }
 
-  // return
-
-
   return <div className='mt-16'>
+
+
     <h4 className='mb-4 capitalize'>total bookings : {misOrdenes.length}</h4>
     <Table>
       <TableCaption>A list of your recent bookings.</TableCaption>
@@ -104,7 +83,7 @@ async function MisComprasPagina() {
 
               <TableCell className="">{creada}</TableCell>
               <TableCell>{id}</TableCell>
-              <TableCell>{paymentStatus ? <div className="text-green-500 font-semibold"> Completado </div> :  <div className="text-primary font-semibold"> Procesando </div> }</TableCell>
+              <TableCell>{paymentStatus ? <div className="text-green-500 font-semibold"> Completado </div> : <div className="text-primary font-semibold"> Procesando </div>}</TableCell>
               <TableCell>{formatCurrency(amount)}</TableCell>
               <TableCell>{deliveryStatus}</TableCell>
               <TableCell>

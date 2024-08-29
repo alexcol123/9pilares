@@ -195,7 +195,7 @@ export const updateProductImagesAction = async (
     const images = Object.values(validatedFields)
 
     const imagePaths = await Promise.all(images.map(uploadImage))
-    console.log(imagePaths)
+    // console.log(imagePaths)
 
 
     await db.producto.update({
@@ -255,12 +255,12 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
 
 
   const productos = await db.producto.findMany(
-
     {
-
-
       where: {
         categoria: categoria,
+        cantidad: {
+          gt: 0,
+        },
         // outOfStock: false,
         // cantidad: {
         //   gt: 0,
@@ -278,15 +278,7 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
               mode: 'insensitive',
             },
           },
-          // {
-          //   descripcion: {
-          //     contains: search,
-          //     mode: 'insensitive',
-          //   },
-          // },
         ],
-
-
       },
 
 
@@ -663,9 +655,21 @@ export const crearOrdenAction = async (prevState: {
 export const fetchOrdenes = async () => {
   const user = await getAuthUser()
 
+  const borrarOrdenes = await db.orden.deleteMany({
+    where: {
+      paymentStatus: false,
+      createdAt: {
+        lt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 4),
+      },
+    },
+  })
+
+
+
   const misOrdenes = await db.orden.findMany({
     where: {
       perfilId: user.id,
+      paymentStatus: true,
     },
     orderBy: {
       createdAt: 'desc',
@@ -694,3 +698,94 @@ export const borrarOrdenAction = async (prevState: { ordenId: string }) => {
   }
 }
 
+
+
+export const deleteProductAction = async (prevState: { productId: string }) => {
+  const { productId } = prevState
+  const user = await getAuthUser()
+
+  try {
+    await db.producto.delete({
+      where: {
+        id: productId,
+        perfilId: user.id,
+      },
+    })
+
+    revalidatePath('/mis-productos')
+    return { message: 'Producto eliminado' }
+  } catch (error) {
+    return renderError(error)
+  }
+}
+
+export const fetchMisProductos = async () => {
+  const user = await getAuthUser()
+
+  const misProductos = await db.producto.findMany({
+    where: {
+      perfilId: user.id,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+
+
+  // const productosConVentas = await db.producto.aggregate({
+  //   where: {
+  //     perfilId: user.id,
+  //   },
+  //   _count: {
+  //     id: true,
+  //   },
+  //   _sum: {
+  //     vendidos: true,
+  //   },
+  // })
+
+
+
+
+
+  return misProductos
+
+}
+
+
+
+
+
+export const fetchMisVentas = async () => {
+  const user = await getAuthUser()
+
+  const misProductosConVentas = await db.producto.findMany({
+    where: {
+      perfilId: user.id,
+      vendidos: {
+        gt: 0,
+      },
+    },
+    orderBy: {
+      vendidos: 'desc',
+    },
+  })
+
+
+  const ventasStats = await db.producto.aggregate({
+    where: {
+      perfilId: user.id,
+    },
+    _count: {
+      id: true,
+    },
+    _sum: {
+      vendidos: true,
+    },
+  })
+
+  return { ventasStats, misProductosConVentas }
+
+}
+
+console.log(fetchMisProductos())

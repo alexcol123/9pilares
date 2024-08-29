@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { SignInButton } from '@clerk/nextjs'
 import { FaRegHeart, FaHeart } from 'react-icons/fa'
 import { LuTrash2, LuPenSquare } from 'react-icons/lu'
+import { useCartStore } from '@/utils/store'
 
 type btnSize = 'default' | 'sm' | 'lg'
 type SubmitButtonProps = {
@@ -52,6 +53,7 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
 
 
 export const SubmitButton = ({ className = '', text = 'submit', size = 'lg' }: SubmitButtonProps) => {
+
 
   const { pending } = useFormStatus()
 

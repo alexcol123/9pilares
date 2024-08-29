@@ -41,7 +41,7 @@ export function DialogComponent({ listaDeProductos }: { listaDeProductos: produc
           <AlertDialogDescription>
             {listaDeProductos.map((producto) => {
 
-              console.log(producto.id)
+         
               return <div key={producto.id}>
                 <Link href={'/productos/' + producto.id} target="_blank" >
 
