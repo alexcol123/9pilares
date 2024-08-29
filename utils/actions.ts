@@ -788,4 +788,27 @@ export const fetchMisVentas = async () => {
 
 }
 
-console.log(fetchMisProductos())
+
+
+export const fetchProductoDetails = async (productoId: string) => {
+  const user = await getAuthUser()
+
+  const producto = await db.producto.findUnique({
+    where: {
+      id: productoId,
+      perfilId: user.id,
+    },
+  })
+
+  return producto
+}
+
+
+export const updateProductAction = async () => {
+  return { message: 'Producto actualizado' }
+}
+
+
+export const updateProductImageAction = async () => {
+  return { message: 'Producto Imagen actualizado' }
+}

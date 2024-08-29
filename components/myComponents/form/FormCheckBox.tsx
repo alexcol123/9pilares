@@ -16,6 +16,7 @@ const FormCheckBox = ({ name, texto }: { name: string, texto: string }) => {
       onCheckedChange={() => setvalor(!valor)}
       checked={valor}
       value={valor.toString()}
+      
 
 
       />
