@@ -21,7 +21,7 @@ type MultipleImageInputContainerProps = {
 
 
 function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
-  const { name, action, maximumImages = 4 , productId} = props
+  const { name, action, maximumImages = 4, productId } = props
 
   const [maxImages, setmaxImages] = useState([1])
   console.log(maxImages)
@@ -52,7 +52,7 @@ function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
             />
           })}
 
-<input type='hidden' name='productId' value={productId} />
+          <input type='hidden' name='productId' value={productId} />
 
 
           <div className="grid md:grid-cols-1 mt-14 gap-4  ">
@@ -82,8 +82,13 @@ function MultipleImageInputContainer(props: MultipleImageInputContainerProps) {
             </div>
 
 
-            <div className='flex items-center justify-center w-full mt-10'>
+            <div className='flex items-center justify-center w-full mt-10  gap-x-10'>
               <SubmitButton size='lg' text='Submitir Imagenes' />
+
+              <Button asChild variant={'destructive'} size={'lg'}>
+                <a href={`/mis-productos`} className='text-white'>Crear Sin Imagenes</a>
+              </Button>
+
             </div>
           </div>
 

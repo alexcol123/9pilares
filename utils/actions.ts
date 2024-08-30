@@ -6,10 +6,7 @@ import db from './db'
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { uploadImage } from './supabase'
-import { arrayOutputType } from 'zod'
-import { raw } from '@prisma/client/runtime/library'
-import { list } from 'postcss'
+import { deleteImage, uploadImage } from './supabase'
 
 // local functions 
 const getAuthUser = async () => {
@@ -894,6 +891,9 @@ export const updateProductAction = async (prevState: any, formData: FormData) =>
 export const borrarUnaImagenAction = async (prevState: { ImageUrl: string, productId: string }) => {
   const user = await getAuthUser()
 
+const {ImageUrl, productId} = prevState
+
+await deleteImage(ImageUrl)
 
   const productoImagenes = await db.producto.findUnique({
     where: {
@@ -905,14 +905,14 @@ export const borrarUnaImagenAction = async (prevState: { ImageUrl: string, produ
     },
   })
 
-  const updatedImageList = productoImagenes?.imagenes.filter((img: string) => img !== prevState.ImageUrl) as string[]  // remove the image from the array
+  const updatedImageList = productoImagenes?.imagenes.filter((img: string) => img !== ImageUrl) as string[]  // remove the image from the array
 
 
   try {
 
     await db.producto.update({
       where: {
-        id: prevState.productId,
+        id: productId,
         perfilId: user.id,
       },
       data: {
@@ -922,7 +922,7 @@ export const borrarUnaImagenAction = async (prevState: { ImageUrl: string, produ
 
       },
     })
-    revalidatePath(`/mis-productos/crear/imagenesEdit/${prevState.productId}`)  // revalidate the page
+    revalidatePath(`/mis-productos/crear/imagenesEdit/${productId}`)  // revalidate the page
     return { message: 'Imagen eliminada' }
   } catch (error) {
     return renderError(error)
