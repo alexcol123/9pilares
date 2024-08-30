@@ -27,7 +27,7 @@ const AgregarImagensPage = async ({ params }: { params: { id: string } }) => {
   return (
     <section>
       <h1 className='text-2xl font-semibold mb-8 capitalize'>
-        agregar mas imagenes
+        {`Agregar imagenes: " ${product.nombre} "`}
       </h1>
 
 
@@ -49,12 +49,16 @@ const AgregarImagensPage = async ({ params }: { params: { id: string } }) => {
           {currentImages.map((image: string, index: number) => (
 
 
-            <div key={index} className='relative'>
-              <div className='relative'>
-                <Image width={200} height={200} src={image} alt='imagen' className='w-42 h-42 object-cover  rounded-md' />
-                <div className=' absolute top-2 right-3 bg-primary-foreground/80 rounded-xl hover:bg-primary-foreground '>
-                  <DeleteSingleImage ImageUrl={image}productId={productId} />
+            <div key={index} >
+              <div className='w-fit'>
+                <div className='relative'>
+                  <Image width={200} height={200} src={image} alt='imagen' className='w-42 h-42 object-cover  rounded-md' />
+                  <div className='absolute top-2 right-2 bg-primary-foreground/80 rounded-xl hover:bg-primary-foreground '>
+                    <DeleteSingleImage ImageUrl={image} productId={productId} />
+                  </div>
                 </div>
+
+
               </div>
             </div>
           ))}
@@ -86,7 +90,7 @@ const AgregarImagensPage = async ({ params }: { params: { id: string } }) => {
 
 }
 
-const DeleteSingleImage = ({ ImageUrl, productId }: { ImageUrl: string, productId:string }) => {
+const DeleteSingleImage = ({ ImageUrl, productId }: { ImageUrl: string, productId: string }) => {
   const deleteSingleImage = borrarUnaImagenAction.bind(null, { ImageUrl, productId })
 
   return (

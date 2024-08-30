@@ -44,7 +44,7 @@ export const IconButton = ({ actionType, iconSize }: { actionType: actionType, i
       type='submit'
       size='icon'
       variant='link'
-      className='p-2 cursor-pointer'
+      className='p-2 cursor-pointer text-primary-foreground'
     >
       {pending ? <IoReload className=' animate-spin' size={iconSize || 16} /> : renderIcon()}
     </Button>

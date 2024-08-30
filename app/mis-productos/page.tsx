@@ -17,6 +17,10 @@ import { IconButton } from '@/components/myComponents/form/Buttons'
 import ListaVacia from '@/components/myComponents/home/ListaVacia'
 import { deleteProductAction, fetchMisProductos } from '@/utils/actions'
 import Image from 'next/image'
+import { PiImageFill } from "react-icons/pi";
+import { Button } from '@/components/ui/button'
+import MyAlertDialog from '@/components/myComponents/alertdialog/MyAlertDialog'
+
 
 
 
@@ -80,10 +84,27 @@ async function MisProductosPage() {
                 <TableCell>{p.vendidos}</TableCell>
 
                 <TableCell className='flex items-center gap-x-3 mt-2'>
-                   <Link href={`mis-productos/${p.id}/edit`}>
+                  <Link href={`mis-productos/${p.id}/edit`}>
                     <IconButton actionType='edit'></IconButton>
                   </Link>
-                  <BorrarProducto productId={p.id} />
+
+
+                  <Link href={`/mis-productos/crear/imagenesEdit/${p.id}`}>
+                    {/* /mis-productos/crear/imagenesEdit/ef19b332-46d2-4528-82fb-bd9de673f5db */}
+                    <PiImageFill size={16} />
+                  </Link>
+
+                  {/* <div className='ml-4'>
+               <BorrarProducto productId={p.id} />
+               </div> */}
+                <div className='ml-2'>
+                <MyAlertDialog  >
+                    <BorrarProducto productId={p.id} />
+                  </MyAlertDialog>
+
+                </div>
+
+
                 </TableCell>
               </TableRow>
             )
@@ -102,5 +123,6 @@ function BorrarProducto({ productId }: { productId: string }) {
     </FormContainer>
   )
 }
+
 
 export default MisProductosPage

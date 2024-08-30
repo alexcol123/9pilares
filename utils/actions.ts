@@ -745,7 +745,24 @@ export const deleteProductAction = async (prevState: { productId: string }) => {
   const { productId } = prevState
   const user = await getAuthUser()
 
+  const producto = await db.producto.findUnique({
+    where: {
+      id: productId,
+      perfilId: user.id,
+    },
+    select: {
+      imagenes: true,
+    },
+  })
+
+  if(!producto) {
+    return renderError(new Error('Producto no encontrado'))
+  }
+
   try {
+
+    await Promise.all(producto.imagenes.map(deleteImage)) // delete all images
+
     await db.producto.delete({
       where: {
         id: productId,
@@ -891,9 +908,9 @@ export const updateProductAction = async (prevState: any, formData: FormData) =>
 export const borrarUnaImagenAction = async (prevState: { ImageUrl: string, productId: string }) => {
   const user = await getAuthUser()
 
-const {ImageUrl, productId} = prevState
+  const { ImageUrl, productId } = prevState
 
-await deleteImage(ImageUrl)
+  await deleteImage(ImageUrl)
 
   const productoImagenes = await db.producto.findUnique({
     where: {
