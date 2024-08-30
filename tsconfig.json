@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/perfil/testingaction", "app/mis-productos/[id]/edit"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/perfil/testingaction", "app/mis-productos/[id]/edit", "app/mis-productos/crear/imagenesEdit"],
   "exclude": ["node_modules"]
 }

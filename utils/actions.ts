@@ -220,6 +220,50 @@ export const updateProductImagesAction = async (
 }
 
 
+export const addMoreProductImagesAction = async (
+  prevState: any,
+  formData: FormData
+): Promise<{ message: string }> => {
+  const user = await getAuthUser()
+
+  try {
+
+    const productId = formData.get('productId') as string
+
+    const rawData = Object.fromEntries(formData)
+
+    const validatedFields = validateWithZodSchema(imageSchema, rawData)
+
+
+    const images = Object.values(validatedFields)
+
+    const imagePaths = await Promise.all(images.map(uploadImage))
+    // console.log(imagePaths)
+
+
+    await db.producto.update({
+      where: {
+        id: productId,
+        perfilId: user.id,
+      },
+      data: {
+        imagenes: {
+          push: imagePaths
+        }
+      },
+    })
+
+    // revalidatePath(`/mis-productos/crear/imagenes/${productId}`)
+    // return { message: 'Images Uploaded' }
+  } catch (error) {
+    return renderError(error)
+  }
+
+  redirect('/')
+}
+
+
+
 export const createProductoAction = async (prevState: any, formData: FormData) => {
   const user = await getAuthUser()
 
@@ -804,11 +848,43 @@ export const fetchProductoDetails = async (productoId: string) => {
 }
 
 
-export const updateProductAction = async () => {
-  return { message: 'Producto actualizado' }
-}
-
 
 export const updateProductImageAction = async () => {
   return { message: 'Producto Imagen actualizado' }
+}
+
+export const updateProductAction = async (prevState: any, formData: FormData) => {
+  const user = await getAuthUser()
+
+  let productId = formData.get('id') as string
+
+
+  try {
+    const rawData = Object.fromEntries(formData)
+
+
+
+
+    const validatedFields = validateWithZodSchema(productoSchema, rawData)
+
+    // console.log(validatedFields)
+    // return { message: 'Producto creado' }
+
+    const producto = await db.producto.update({
+      where: {
+        id: productId,
+        perfilId: user.id,
+      },
+      data: {
+        ...validatedFields,
+        perfilId: user.id,
+      },
+    })
+
+    productId = producto.id
+
+  } catch (error) {
+    return renderError(error)
+  }
+  redirect(`/mis-productos/crear/imagenesEdit/${productId}`)
 }
