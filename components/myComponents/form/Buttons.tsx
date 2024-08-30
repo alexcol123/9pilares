@@ -1,7 +1,8 @@
 
 'use client'
 
-import { ReloadIcon } from '@radix-ui/react-icons'
+import { IoReload } from "react-icons/io5";
+
 import { useFormStatus } from 'react-dom'
 import { Button } from '@/components/ui/button'
 
@@ -23,15 +24,15 @@ type SubmitButtonProps = {
 
 type actionType = 'edit' | 'delete'
 
-export const IconButton = ({ actionType }: { actionType: actionType }) => {
+export const IconButton = ({ actionType, iconSize }: { actionType: actionType, iconSize?: number }) => {
   const { pending } = useFormStatus()
 
   const renderIcon = () => {
     switch (actionType) {
       case 'edit':
-        return <LuPenSquare />
+        return <LuPenSquare size={iconSize || 16} />
       case 'delete':
-        return <LuTrash2 />
+        return <LuTrash2 size={iconSize || 16} />
       default:
         const never: never = actionType
         throw new Error(`Invalid action type: ${never}`)
@@ -45,7 +46,7 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
       variant='link'
       className='p-2 cursor-pointer'
     >
-      {pending ? <ReloadIcon className=' animate-spin' /> : renderIcon()}
+      {pending ? <IoReload className=' animate-spin' size={iconSize || 16} /> : renderIcon()}
     </Button>
   )
 }
@@ -64,7 +65,7 @@ export const SubmitButton = ({ className = '', text = 'submit', size = 'lg' }: S
       size={size}
     >
       {pending
-        ? <>  <ReloadIcon className='mr-2 h-4 w-4 animate-spin' /> Please Wait</>
+        ? <>  <IoReload className='mr-2 h-4 w-4 animate-spin' /> Please Wait</>
         : text}
     </Button>
   )
@@ -92,7 +93,7 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
   const { pending } = useFormStatus()
 
   return <Button type='submit' size='icon' variant='outline' className=' cursor-pointer bg-muted '>
-    {pending ? <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+    {pending ? <IoReload className='mr-2 h-4 w-4 animate-spin' />
       : isFavorite
         ? <FaHeart size={21} className=' text-destructive' />
         : <FaRegHeart size={21} className='' />}

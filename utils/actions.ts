@@ -888,3 +888,43 @@ export const updateProductAction = async (prevState: any, formData: FormData) =>
   }
   redirect(`/mis-productos/crear/imagenesEdit/${productId}`)
 }
+
+
+
+export const borrarUnaImagenAction = async (prevState: { ImageUrl: string, productId: string }) => {
+  const user = await getAuthUser()
+
+
+  const productoImagenes = await db.producto.findUnique({
+    where: {
+      id: prevState.productId,
+      perfilId: user.id,
+    },
+    select: {
+      imagenes: true,
+    },
+  })
+
+  const updatedImageList = productoImagenes?.imagenes.filter((img: string) => img !== prevState.ImageUrl) as string[]  // remove the image from the array
+
+
+  try {
+
+    await db.producto.update({
+      where: {
+        id: prevState.productId,
+        perfilId: user.id,
+      },
+      data: {
+        imagenes: {
+          set: updatedImageList,
+        },
+
+      },
+    })
+    revalidatePath(`/mis-productos/crear/imagenesEdit/${prevState.productId}`)  // revalidate the page
+    return { message: 'Imagen eliminada' }
+  } catch (error) {
+    return renderError(error)
+  }
+}
