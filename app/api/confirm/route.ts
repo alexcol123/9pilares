@@ -43,9 +43,13 @@ export const GET = async (req: NextRequest) => {
 
     if (myOrderData !== null) {
 
+
+
       let productOrdenado = JSON.parse(myOrderData.products)
 
       productOrdenado.forEach(async (product: any) => {
+        console.log('productCantidad comprar', product.cantidadParaComprar)
+        console.log('productCantidad quantity', product.cantidad)
         await db.producto.update({
           where: { id: product.id },
           data: {
@@ -60,8 +64,8 @@ export const GET = async (req: NextRequest) => {
       })
 
     }
-    
-    myOrderData= null
+
+    myOrderData = null
 
 
     // productsOrderes.forEach(async (product: any) => {
