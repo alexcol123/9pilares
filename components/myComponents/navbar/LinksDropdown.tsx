@@ -19,8 +19,9 @@ import { FaHome } from "react-icons/fa";
 import SignOutLink from './SignOutLink'
 
 function LinksDropdown() {
+const {userId} = auth()
 
-
+  const  isAdmin = userId === process.env.ADMIN_USER_ID
 
   return (
     <DropdownMenu>
@@ -47,9 +48,9 @@ function LinksDropdown() {
 
           {links.map((link) => {
 
-            // if (link.label === 'admin' && !isAdmin) {
-            //   return null
-            // }
+            if (link.label === 'admin' && !isAdmin) {
+              return null
+            }
 
             return (
               <DropdownMenuItem key={link.href}>

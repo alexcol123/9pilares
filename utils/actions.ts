@@ -7,6 +7,8 @@ import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { deleteImage, uploadImage } from './supabase'
+import { formatDate } from './format'
+import { DeliveryStatusEnum } from '@prisma/client'
 
 // local functions 
 const getAuthUser = async () => {
@@ -21,6 +23,15 @@ const getAuthUser = async () => {
 
   return user
 }
+
+const getAdminUser = async () => {
+  const user = await getAuthUser()
+  if (user.id !== process.env.ADMIN_USER_ID) {
+    redirect('/')
+  }
+  return user
+}
+
 
 const renderError = (error: unknown): { message: string } => {
   console.log(error)
@@ -755,7 +766,7 @@ export const deleteProductAction = async (prevState: { productId: string }) => {
     },
   })
 
-  if(!producto) {
+  if (!producto) {
     return renderError(new Error('Producto no encontrado'))
   }
 
@@ -945,3 +956,118 @@ export const borrarUnaImagenAction = async (prevState: { ImageUrl: string, produ
     return renderError(error)
   }
 }
+
+
+export const fetchStats = async () => {
+  await getAdminUser()
+
+  const usersCount = await db.perfil.count()
+  const productsCount = await db.producto.count()
+  const ordersCount = await db.orden.count()
+
+
+  return { usersCount, productsCount, ordersCount }
+
+}
+
+export const fetchChartData = async () => {
+  await getAdminUser()
+
+  const date = new Date()
+  date.setMonth(date.getMonth() - 6)
+
+  const sixMonthsAgo = date
+
+  const orders = await db.orden.findMany({
+    where: {
+      createdAt: {
+        gte: sixMonthsAgo,
+      },
+    },
+    select: {
+      id: true,
+      createdAt: true,
+      amount: true,
+    },
+    orderBy: {
+      createdAt: 'asc',
+    },
+  })
+
+
+
+
+  let ordersPorMes = orders.reduce((total, current) => {
+    const date = formatDate(current.createdAt, true)
+
+    const existingEntry = total.find((entry) => entry.date === date)
+    if (existingEntry) {
+      existingEntry.count += 1
+    } else {
+      total.push({ date, count: 1 })
+    }
+    return total
+  }, [] as Array<{ date: string; count: number }>)
+
+  return ordersPorMes
+}
+
+
+
+
+// Admin orders 
+
+export const fetchAllOrdenes = async () => {
+  await getAdminUser()
+
+
+
+
+  const allOrders = await db.orden.findMany({
+    where: {
+      paymentStatus: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+  return allOrders
+}
+
+
+
+export const AdminchangeDeliveryStatusAction = async (prevState: any, formData: FormData) => {
+  enum DeliveryEnum {
+    PENDING = 'pending',
+    PROCESSING = 'processing',
+    SHIPPED = 'shipped',
+    DELIVERED = 'delivered',
+  }
+  
+
+  const rawData = Object.fromEntries(formData)
+  const { id, deliveryStatus } = rawData
+
+  // Type cast deliveryStatus to the keys of DeliveryStatusEnum
+  const status = deliveryStatus.toString().toUpperCase() as keyof typeof DeliveryEnum;
+
+  if (!Object.keys(DeliveryEnum).includes(status)) {
+    throw new Error('Invalid delivery status');
+  }
+
+
+  await db.orden.update({
+    where: {
+      id: id.toString(),
+    },
+    data: {
+      deliveryStatus: DeliveryEnum[status],
+    },
+
+  })
+
+
+  revalidatePath('/admin/orders')
+  return { message: 'Delivery status updated' }
+}
+

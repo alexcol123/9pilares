@@ -16,6 +16,7 @@ import { list } from "postcss"
 import { formatCurrency } from "@/utils/format"
 import Image from "next/image"
 import Link from "next/link"
+import { FaRegEye } from "react-icons/fa6";
 
 
 export function OrderDialog({ listaDeProductos, ordenId }: { listaDeProductos: productolist[], ordenId: string }) {
@@ -33,7 +34,9 @@ export function DialogComponent({ listaDeProductos }: { listaDeProductos: produc
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button  size={'sm'}> Ver Productos  </Button>
+        <Button   size={'icon'} className="bg-gray-800 text-white border border-primary"> 
+          <FaRegEye  size={18}/>
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

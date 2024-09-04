@@ -17,6 +17,10 @@ import { IconButton } from '@/components/myComponents/form/Buttons'
 import ListaVacia from '@/components/myComponents/home/ListaVacia'
 import { fetchMisVentas } from '@/utils/actions'
 import Image from 'next/image'
+import { Suspense } from 'react'
+import { StatsLoadingContainer } from '@/components/myComponents/admin/Loading'
+import StatsContainer from '@/components/myComponents/admin/StatsContainer'
+import StatsCards from '@/components/myComponents/admin/StatsCard'
 
 
 
@@ -41,8 +45,8 @@ async function MisVentasPage() {
   if (misProductosConVentas.length === 0) {
     return (
       <ListaVacia
-        encabezado='No hay creado productos'
-        mensaje='Crea un producto para poder verlo aquí'
+        encabezado='No haz vendido ningún producto'
+        mensaje='Crea mas productos para vender, y asi poder aumentor tus ventas'
         textoBoton='Crear Producto'
         btnLink='/mis-productos/crear'
       />
@@ -53,7 +57,18 @@ async function MisVentasPage() {
 
   return (
     <div className='mt-16'>
-      <h4 className='mb-4 capitalize'>Ordenes: {ordenes} -  Cantidad Vendida: {cantidadVendida} - Total Ventas: {formatCurrency(totalEnDineroDeVentas)}</h4>
+
+
+
+      <div>
+        <div className=" mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
+          <StatsCards title="ordenes" value={ordenes || 0} />
+          <StatsCards title="Cantidad Vendida" value={cantidadVendida || 0} />
+          <StatsCards title="Total Ventas " value={formatCurrency(totalEnDineroDeVentas) || 0} />
+        </div>
+      </div>
+
+
       <Table>
         <TableCaption>Todas tus ventas</TableCaption>
         <TableHeader>
