@@ -3,6 +3,15 @@
 // import { fetchRentals, deleteRentalAction } from '@/utils/actions'
 import Link from 'next/link'
 
+
+
+import { Label } from "@/components/ui/label"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
 import { formatCurrency } from '@/utils/format'
 import {
   Table,
@@ -23,6 +32,7 @@ import { OrderDialog } from '@/app/mis-compras/orderDialog'
 import { SubmitButton } from '@/components/myComponents/form/Buttons'
 import FormSelect from '@/components/myComponents/form/FormSelect'
 import { Input } from '@/components/ui/input'
+import StatsCards from '@/components/myComponents/admin/StatsCard'
 
 
 
@@ -40,6 +50,15 @@ async function AdminAllOrders() {
       />
     )
   }
+
+
+  const totalInSales = todasLasOrdenes.reduce((acc, o) => {
+    return acc + o.amount
+  }, 0)
+
+  const ordenesSinCompletar = todasLasOrdenes.filter(o => o.deliveryStatus !== 'delivered').length
+
+  const ordenesNuevas = todasLasOrdenes.filter(o => o.deliveryStatus === 'pending').length
 
   // const { ventasStats, misProductosConVentas } = misVentas
   // const { _count, _sum } = ventasStats
@@ -74,13 +93,15 @@ async function AdminAllOrders() {
 
 
 
-      {/* <div>
-        <div className=" mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
-          <StatsCards title="ordenes" value={ordenes || 0} />
-          <StatsCards title="Cantidad Vendida" value={cantidadVendida || 0} />
-          <StatsCards title="Total Ventas " value={formatCurrency(totalEnDineroDeVentas) || 0} />
+      <div>
+        <div className=" mt-8 grid md:grid-cols-2 gap-4 my-8">
+          <StatsCards title="ordenes" value={todasLasOrdenes.length} />
+          <StatsCards title="Total en Ventas " value={formatCurrency(totalInSales)} />
+          <StatsCards title=" Ordenes Nuevas " value={ordenesNuevas} />
+          <StatsCards title=" Ordenes sin Completar " value={ordenesSinCompletar} />
+
         </div>
-      </div> */}
+      </div>
 
 
       <Table>
@@ -154,21 +175,36 @@ const AdminFormAction = ({ productId }: { productId: string }) => {
 
   // const changeDeliveryStatus = AdminchangeDeliveryStatusAction.bind(null, { ordenId: productId, newStatus: 'delivered' })
   return (
-    <FormContainer action={AdminchangeDeliveryStatusAction} >
 
-      <Input name='id' type='hidden' value={productId} />
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline">Cambiar</Button>
+      </PopoverTrigger>
+      <PopoverContent align='end' className="w-80">
 
-      <FormSelect name='deliveryStatus' label='Cambiar Estado' list={[
-        { name: 'pending' },
-        { name: 'processing' },
-        { name: 'shipped' },
-        { name: 'delivered' },
-      ]} />
+        <FormContainer action={AdminchangeDeliveryStatusAction} >
+
+          <Input name='id' type='hidden' value={productId} />
+
+          <FormSelect name='deliveryStatus' label='Cambiar Status Envio' list={[
+            { name: 'pending' },
+            { name: 'processing' },
+            { name: 'shipped' },
+            { name: 'delivered' },
+          ]} />
 
 
-      <SubmitButton  size='sm' />
-    </FormContainer>
+          <SubmitButton size='sm' />
+        </FormContainer>
+      </PopoverContent>
+    </Popover>
+
+
+
   )
 }
 
 export default AdminAllOrders
+
+
+
