@@ -362,7 +362,7 @@ export const fetchAllProducts = async ({ categoria, search = '' }: { categoria?:
       },
     }
   )
-  return productos
+  return productos || []
 }
 
 // Favoritos ============================================
