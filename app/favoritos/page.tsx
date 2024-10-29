@@ -10,7 +10,9 @@ const PaginaFavoritos = async () => {
 
   return (
 
-    <ListaDeProductos productos={favorites} />
+
+    <div>Comming soon</div>
+    // <ListaDeProductos productos={favorites} />
   )
 }
 export default PaginaFavoritos
