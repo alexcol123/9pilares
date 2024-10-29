@@ -12,10 +12,7 @@ export type ProductCardTypes = {
   cantidad?: number | null,
   onSale: boolean,
   outOfStock: boolean,
-  perfil: {
-    nombre: string,
-    imagenPerfil: string
-  } | null,
+
 } | null
 
 
@@ -29,7 +26,7 @@ const ListaDeProductos = ({ productos }: { productos: ProductCardTypes[] }) => {
      grid-flow-row auto-rows-max 
        '>
 
-      {productos.map((producto) => {
+      {productos.map((producto: ProductCardTypes) => {
 
 
         return <ProductCard key={producto?.id} producto={producto} />

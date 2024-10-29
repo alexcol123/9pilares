@@ -5,11 +5,16 @@ import ListaDeProductos from "./ListaDeProductos"
 const ContenedorDeProductos = async ({ categoria, search }: { categoria?: string, search?: string }) => {
 
 
-  const productos = await fetchAllProducts({ categoria, search })
+  let productos = await fetchAllProducts({ categoria, search })
 
   if (productos.length === 0) {
     return <ListaVacia />
   }
+
+  productos = productos.map(producto => ({
+    ...producto,
+    perfil: producto.Perfil || null
+  }));
 
 
 

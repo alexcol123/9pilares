@@ -136,14 +136,14 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
         <ProductImages imagenes={producto.imagenes} />
 
 
-        {producto.perfil && (
+        {producto.Perfil && (
           <div className="flex gap-4 items-center  justify-between bg-yellow-200 p-2 rounded-xl mt-20 mb-8 px-4 ">
             <div className="flex flex-col justify-center  ">
 
-              <h4 className="font-bold text-slate-900 ">   {producto?.perfil?.nombre}  Store</h4>
+              <h4 className="font-bold text-slate-900 ">   {producto?.Perfil?.nombre}  Store</h4>
               <h5 className=" font-semibold text-sm text-slate-700">  99.7% Comentarios positivos - Mas de 9,156 ventas</h5>
             </div>
-            <Image src={producto?.perfil?.imagenPerfil} width={50} height={50} alt={'tienda'} className="rounded-full object-cover aspect-square " />
+            <Image src={producto?.Perfil?.imagenPerfil} width={50} height={50} alt={'tienda'} className="rounded-full object-cover aspect-square " />
           </div>
 
 
